@@ -1,13 +1,6 @@
 # DreamTalk
 ----
 
-<div align="center">
-
-![screenshot-web](./docs/screenshot-1.png)
-![screenshot-mobile](./docs/screenshot-2.png)
-
-## </div>
-
 ## Requirements
 
 - node >= v16.16.0
