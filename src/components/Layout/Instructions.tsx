@@ -42,7 +42,6 @@ export const Instructions = ({ onClick }: IInstructionsProps) => {
             ]
         }
     ];
-    
 
     return (
         <Stack
@@ -54,7 +53,7 @@ export const Instructions = ({ onClick }: IInstructionsProps) => {
             <Heading
                 size="lg"
                 marginY={8}
-            >DreamChat</Heading>
+            >DreamTalk</Heading>
             <Stack
                 direction={["column", "column", "row"]}
             >

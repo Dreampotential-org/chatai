@@ -215,6 +215,8 @@ export const Chat = ({ ...props }: ChatProps) => {
                     <Input
                         autoFocus={true}
                         variant="filled"
+                        width="600px"
+                        placeholder="Send a message"
                         inputRightAddon={(
                             <IconButton
                                 aria-label="send_button"
@@ -231,11 +233,7 @@ export const Chat = ({ ...props }: ChatProps) => {
                             };
                         }}
                     />
-                    <Text
-                        textAlign="center"
-                        fontSize="sm"
-                        opacity={.5}
-                    >Free Research Preview. Our goal is to make AI systems more natural and safe to interact with. Your feedback will help us improve.</Text>
+    
                 </Stack>
             </Stack>
         </Stack>
