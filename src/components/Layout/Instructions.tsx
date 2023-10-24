@@ -1,4 +1,4 @@
-import { Stack, Heading, Icon, Button, Text } from "@chakra-ui/react";
+import { Stack, Heading, Icon, Button, Text, Center } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 import { FiAlertTriangle, FiSun, FiZap } from "react-icons/fi";
 
@@ -52,8 +52,10 @@ export const Instructions = ({ onClick }: IInstructionsProps) => {
         >
             <Heading
                 size="lg"
-                marginY={8}
-            >DreamTalk</Heading>
+                marginY={5}
+                alignItems='Center'
+            ><img src="../../../public/logo.png" alt="Logo"  width="100" height="120" /> </Heading>
+            
             <Stack
                 direction={["column", "column", "row"]}
             >
