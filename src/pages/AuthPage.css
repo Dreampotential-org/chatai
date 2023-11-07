@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+:root {
+    --primary-accent: #1d3557ff;
+    --secondry-accent: #457b9dff;
+    --third-accent: #023047ff;
+    --primary-text: #f1faeeff;
+    --secondry-text: #a8dadcff;
+    --third-text: #219ebcff;
+    --CTA: #e63946ff;
+
+    --white: #FFF;
+    --black: #17171b;
+
+    --gray-0: #f8f9faff;
+    --gray-50: #e9ecefff;
+    --gray-100: #dee2e6ff;
+    --gray-200: #ced4daff;
+    --gray-300: #adb5bdff;
+    --gray-400: #6c757dff;
+    --gray-600: #495057ff;
+    --gray-700: #343a40ff;
+    --gray-800: #212529ff;
+
+    --main-font: 'Rajdhani', sans-serif;
+    --p-font: 'Lato', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h6 {
+    font-family: var(--main-font);
+    color: var(--secondry-text);
+    font-weight: 800;
+}
+
+a {
+    font-weight: 500;
+    font-family: var(--p-font);
+}
+
+p,
+label {
+    font-family: var(--p-font);
+    font-weight: 300;
+}
+
+
+button {
+    font-size: 16px;
+    position: relative;
+    padding: 0.3rem .5rem;
+    z-index: 1;
+    border: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.52rem;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.52rem;
+}
+
+
+.auth {
+    margin: auto;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.authpage {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    width: 500px;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--third-accent);
+}
+
+:is(.signup, .login) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+
+:is(.signup, .login) form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 80%;
+}
+
+:is(.signup, .login) .heading {
+    font-size: 1.2rem;
+    font-family: var(--main-font);
+    font-weight: 300;
+    letter-spacing: 0.09em;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+:is(.signup>.heading, .login>.heading) h1 {
+    color: var(--gray-100);
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 90%;
+}
+
+.inputs input {
+    width: 100%;
+    color: var(--third-text);
+    background: var(--third-accent);
+    border: 1px solid var(--third-text);
+    font-family: var(--main-font);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+}
+
+.inputs p {
+    padding: 0.3rem 0 0 .8rem;
+    color: var(--CTA);
+    font-family: var(--main-font);
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.1rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    font-family: var(--main-font);
+    font-size: 1rem;
+    color: var(--third-accent);
+    border-radius: 0.2rem;
+    border: 2px solid var(--third-text);
+    background-color: var(--third-text);
+    transition: background 100ms ease-in;
+}
+
+.btn:hover {
+    background: var(--third-accent);
+    color: #FFF;
+}
+
+.linkpage button {
+    background-color: transparent;
+    color: var(--third-text);
+    font-family: var(--main-font);
+}
+
+.linkpage button:hover {
+    color: #FFF;
+}
+
+@media screen and (max-width:510px) {
+    .content {
+        width: 98%;
+        height: 500px;
+    }
+
+    :is(.signup, .login) form {
+        width: 95%;
+    }
+}

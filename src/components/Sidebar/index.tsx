@@ -5,6 +5,9 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { CSSProperties, useEffect, useState } from "react";
 import store from "store2";
 import { motion } from "framer-motion";
+import './index.css';
+import AuthPage from "../../pages/AuthPage";
+import { useNavigate } from "react-router-dom";
 
 //Components
 import {
@@ -33,10 +36,12 @@ import {
     FiX
 } from "react-icons/fi";
 export interface SideBarProps {
-    isResponsive?: boolean
+    isResponsive?: boolean;
+    credential: boolean;
+    updateState: () => void;
 };
 
-export const Sidebar = ({ isResponsive, ...props }: SideBarProps) => {
+export const Sidebar = ({ isResponsive, credential,updateState }: SideBarProps) => {
     const [isOpen, setIsOpen] = useState(true),
         handleOpen = () => setIsOpen(true),
         handleClose = () => setIsOpen(false);
@@ -71,10 +76,13 @@ export const Sidebar = ({ isResponsive, ...props }: SideBarProps) => {
         left: isOpen ? 0 : '-100%',
         top: 0
     } : {};
+    const logoutSession = () => {
+        updateState();
+        localStorage.clear();
+    }
 
     return (
         <>
-            
             {!!(isResponsive) && (
                 <Stack
                     direction="row"
@@ -245,7 +253,8 @@ export const Sidebar = ({ isResponsive, ...props }: SideBarProps) => {
                             backgroundColor: "blackAlpha.300"
                         }}
                     >Updates & FAQ</Button>
-                    <Button
+                    <Button 
+                        onClick={logoutSession}
                         leftIcon={<FiLogOut />}
                         justifyContent="flex-start"
                         padding={2}
@@ -253,7 +262,7 @@ export const Sidebar = ({ isResponsive, ...props }: SideBarProps) => {
                         _hover={{
                             backgroundColor: "blackAlpha.300"
                         }}
-                    >Log Out</Button>
+                    >{credential===false?"Sign Up":"Log Out"}</Button>
                    
                 </Stack>
             </Stack>
