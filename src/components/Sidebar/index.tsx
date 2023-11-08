@@ -37,11 +37,9 @@ import {
 } from "react-icons/fi";
 export interface SideBarProps {
     isResponsive?: boolean;
-    credential: boolean;
-    updateState: () => void;
 };
 
-export const Sidebar = ({ isResponsive, credential,updateState }: SideBarProps) => {
+export const Sidebar = ({ isResponsive}: SideBarProps) => {
     const [isOpen, setIsOpen] = useState(true),
         handleOpen = () => setIsOpen(true),
         handleClose = () => setIsOpen(false);
@@ -76,10 +74,22 @@ export const Sidebar = ({ isResponsive, credential,updateState }: SideBarProps) 
         left: isOpen ? 0 : '-100%',
         top: 0
     } : {};
+
+    const navigate = useNavigate()
     const logoutSession = () => {
-        updateState();
+        navigate('/login')
         localStorage.clear();
     }
+    
+    const[textBtn,setTextbtn] = useState(false)
+    useEffect(() => {
+        const token = localStorage.getItem('Token')
+        if (token !== null) {
+            setTextbtn(true);            
+        } else {
+            setTextbtn(false)
+        }
+    },[])
 
     return (
         <>
@@ -262,7 +272,7 @@ export const Sidebar = ({ isResponsive, credential,updateState }: SideBarProps) 
                         _hover={{
                             backgroundColor: "blackAlpha.300"
                         }}
-                    >{credential===false?"Sign Up":"Log Out"}</Button>
+                    >{textBtn===false?"Sign Up":"Log Out"}</Button>
                    
                 </Stack>
             </Stack>

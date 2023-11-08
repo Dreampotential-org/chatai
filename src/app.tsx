@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import Home from '@/pages/Home';
@@ -8,17 +8,13 @@ import '@/styles/global.css';
 import { Providers } from './components/Providers';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const updateState = () => {
-    setIsLoggedIn(isLoggedIn===false?true:false)
-  }
   return (
     <React.StrictMode>
       <Providers>
         <Router>
           <Routes>
-            <Route path="/" element={<Home credential={isLoggedIn} updateState={updateState} />} />
-            <Route path="/login" element={<AuthPage updateState={updateState} />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<AuthPage />} />
           </Routes>
         </Router>
       </Providers>

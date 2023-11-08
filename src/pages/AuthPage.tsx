@@ -7,10 +7,8 @@ interface ErrorState {
   email: string;
   password: string;
 }
-type Props = {
-  updateState: ()=> void;
-};
-const AuthPage: React.FC<Props> = ({updateState}) => {
+
+const AuthPage: React.FC = () => {
   const navigate = useNavigate();
   const [authSection, setAuthSection] = useState(false);
   const [valuesregi, setValuesregi] = useState({
@@ -55,7 +53,6 @@ const AuthPage: React.FC<Props> = ({updateState}) => {
               email: '',
               password: '',
             });
-              updateState()
               navigate('/')
           }
         })
@@ -98,7 +95,6 @@ const AuthPage: React.FC<Props> = ({updateState}) => {
               email: "",
               password: "",
             });
-            updateState()
             navigate('/')
           }
         })
