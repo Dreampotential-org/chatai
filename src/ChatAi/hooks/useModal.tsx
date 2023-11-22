@@ -1,4 +1,4 @@
-import { Modal, ModalRef, ModalProps } from "@/components/Modal";
+import { Modal, ModalRef, ModalProps } from "../components/Modal";
 import { useCallback, useRef } from "react";
 
 export const useModal = () => {

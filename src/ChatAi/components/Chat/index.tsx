@@ -1,16 +1,16 @@
 //Modules
-import gptAvatar from "@/assets/gpt-avatar.svg";
-import warning from "@/assets/warning.svg";
-import user from "@/assets/user.png";
+import gptAvatar from "../../assets/gpt-avatar.svg";
+import warning from "../../assets/warning.svg";
+import user from "../../assets/user.png";
 import { useRef } from "react";
-import { useChat } from "@/store/chat";
+import { useChat } from "../../store/chat";
 import { useForm } from "react-hook-form";
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { OpenAIApi, Configuration } from "openai";
 import { useMutation } from "react-query";
 
 //Components
-import { Input } from "@/components/Input";
+import { Input } from "../Input/index";
 import { FiSend } from "react-icons/fi";
 import {
     Avatar,
@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import ReactMarkdown from 'react-markdown'
 import { Instructions } from "../Layout/Instructions";
-import { useAPI } from "@/store/api";
+import { useAPI } from "../../store/api";
 
 export interface ChatProps { };
 

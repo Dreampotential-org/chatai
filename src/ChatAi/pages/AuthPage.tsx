@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { logInApi ,signUPApi} from '../services/helper';
-import './AuthPage.css';
+// import './AuthPage.css';
 
 interface ErrorState {
   email: string;
@@ -48,7 +48,7 @@ const AuthPage: React.FC = () => {
         .then((res) => {
           console.log('response ==>' + JSON.stringify(res));
           if (res?.status === 200) {
-            // toast.success("LogIn Successfully!");
+            console.log("LogIn Successfully!");
             setValuesregi({
               email: '',
               password: '',
@@ -57,7 +57,7 @@ const AuthPage: React.FC = () => {
           }
         })
         .catch((err) => {
-          //   toast.error(err.msg);
+             console.error(err.msg);
         });
     }
   };

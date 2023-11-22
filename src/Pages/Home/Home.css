@@ -1,0 +1,107 @@
+.home {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 0.6fr .4fr;
+    overflow: hidden;
+}
+
+.left {
+    width: 100%;
+    padding: 2rem;
+}
+
+.left .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.left .left-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    /* gap: 1rem; */
+}
+
+.left-content h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--chakra-colors-blue-300);
+}
+
+.left-content p {
+    font-size: 1.5rem;
+    line-height: 1.1;
+    color: var(--chakra-colors-whatsapp-500);
+}
+
+.right {
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+    background-color: var(--prussian-blue);
+}
+
+.auth-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 90%;
+    gap: 1rem;
+}
+
+.termService {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 100%;
+    height: 10%;
+}
+
+.link-container,
+.services {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.auth-section h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.link-container a,
+.nav button {
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    background-color: var(--caribbean-current);
+    border: 2px solid var(--caribbean-current);
+    color: var(--white) !important;
+}
+
+.link-container a:hover,
+.nav button:hover {
+    background-color: transparent;
+}
+
+.services p {
+    color: gray;
+}
+
+.services span {
+    height: 90%;
+    border: 1px solid gray;
+    color: gray;
+}

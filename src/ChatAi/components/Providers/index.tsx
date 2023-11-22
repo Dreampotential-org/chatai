@@ -3,9 +3,9 @@ import { PropsWithChildren } from "react";
 
 //Components
 import { ChakraProvider } from "@chakra-ui/react";
-import { theme } from "@/styles/theme";
+import { theme } from "../../styles/theme";
 import { QueryClientProvider } from "react-query";
-import { query } from "@/services/query";
+import { query } from "../../services/query";
 
 export interface IProvidersProps extends PropsWithChildren { };
 

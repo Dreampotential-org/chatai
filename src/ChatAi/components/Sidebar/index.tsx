@@ -1,6 +1,6 @@
 //Modules
-import { useChat } from "@/store/chat";
-import { useModal } from "@/hooks/useModal";
+import { useChat } from "../../store/chat";
+import { useModal } from "../../hooks/useModal";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { CSSProperties, useEffect, useState } from "react";
 import store from "store2";
