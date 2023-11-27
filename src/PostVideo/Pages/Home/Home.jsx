@@ -3,9 +3,9 @@ import {
   AudioRecord,
   Recodings,
   Screenrecoding,
-  UploadVedio,
-} from "../Component/index";
-import Logo from "../Asset/SVG/dreampotential_Logo-01.svg";
+  UploadVideo,
+} from "../../Component/index";
+import Logo from "../../Asset/SVG/dreampotential_Logo-01.svg";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 
@@ -33,7 +33,7 @@ const Home = () => {
     }
   };
 
-  // Call Record Vedio Function for Recoding
+  // Call Record video Function for Recoding
   const handleRecoding = () => {
     if (!recording) {
       setRecord(true);
@@ -68,6 +68,7 @@ const Home = () => {
           </div>
           <div className="nav-links">
             <Link to="/chatai">Chat Ai</Link>
+            <Link to="./viewVideo">Dashboard</Link>
             <button type="button" className="post-btn" onClick={userLogOut}>
               Log Out
             </button>
@@ -91,11 +92,11 @@ const Home = () => {
             )}
             {recording ? (
               <button onClick={handleRecoding} className="post-btn">
-                Stop Vedio Recording
+                Stop video Recording
               </button>
             ) : (
               <button onClick={handleRecoding} className="post-btn">
-                Start Vedio Recording
+                Start video Recording
               </button>
             )}
             {audioRecord ? (
@@ -109,7 +110,7 @@ const Home = () => {
             )}
           </div>
 
-          <div className="vedio-container">
+          <div className="video-container">
             <div className="row-1">
               <Screenrecoding ref={screenRef} />
               <Recodings ref={vedioRef} />
@@ -120,7 +121,7 @@ const Home = () => {
           </div>
           <div>
             <div className="upload-section">
-              <UploadVedio />
+              <UploadVideo />
             </div>
           </div>
         </div>

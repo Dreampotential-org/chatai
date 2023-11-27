@@ -1,41 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../ChatAi/services/axios";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "../Asset/CSS/UploadVideo.css";
 
 const UploadVideo = () => {
   const [recordedStreamFile, setRecordedStreamFile] = useState(null);
 
+  const SERVER = "https://api.dreampotential.org/";
+  const navigate = useNavigate();
+
   const handleUploadedVideo = async (event) => {
     const videoElement = document.getElementById("show-video");
     const fileInput = event.target;
+    const token = JSON.parse(localStorage.getItem("Token"));
+    swal({
+      title: "0%",
+      text: "Video uploading please wait.",
+      icon: "info",
+      buttons: false,
+      closeOnEsc: false,
+      closeOnClickOutside: false,
+    });
 
     if (fileInput.files.length > 0) {
       const file = fileInput.files[0];
 
       if (file.type.startsWith("video/")) {
         const videoURL = URL.createObjectURL(file);
-        console.log(videoURL);
         videoElement.src = videoURL;
         videoElement.controls = true;
         setRecordedStreamFile(file);
 
         try {
           const formData = new FormData();
-          formData.append("video", file);
+          formData.append("file", file);
           formData.append("source", window.location.host);
-
-          const response = await fetch(
-            "https://api.dreampotential.org/storage/video-upload/",
-            {
-              method: "POST",
-              // headers: {
-              //   "Authorization": "Token " + localStorage.getItem("session_id"),
-              // },
-              body: formData,
-            }
-          )
+          const response = await axios
+            .post(`${SERVER}storage/file-upload/`, formData, {
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            })
             .then((response) => {
-              if (response.ok) {
-                return response.json();
+              console.log(response, response.status);
+
+              if (response.status === 200) {
+                swal({
+                  title: "Good job!",
+                  text: "Video submitted successfully!",
+                  icon: "success",
+                  button: "Ok",
+                });
+                return response;
               } else {
+                swal({
+                  title: "Error Try Again",
+                  text: "Sorry, there is an error please try again later.",
+                  icon: "error",
+                  buttons: [true, "Retry"],
+                });
                 throw new Error("Failed to upload video");
               }
             })
@@ -44,6 +68,12 @@ const UploadVideo = () => {
               console.log(data);
             });
         } catch (error) {
+          swal({
+            title: "Error Try Again",
+            text: "Sorry, there is an error please try again later.",
+            icon: "error",
+            buttons: [true, "Retry"],
+          });
           console.error("Error uploading video:", error);
         }
       } else {
@@ -69,7 +99,7 @@ const UploadVideo = () => {
         onChange={handleUploadedVideo}
       />
       <label htmlFor="uploadVideo" className="post-btn">
-        Upload Video
+        Upload File
       </label>
     </div>
   );

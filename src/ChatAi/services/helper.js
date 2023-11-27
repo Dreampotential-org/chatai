@@ -325,3 +325,27 @@ export const logInApi = async (payload) => {
     }
   }
 };
+
+// LIst Video
+// https://api.dreampotential.org/storage/stream-video/4
+export const listVideo = async () => {
+  const token = JSON.parse(localStorage.getItem("Token"));
+  try {
+    const response = await axiosInstance
+      .get(`${SERVER}storage/list_files/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          return response;
+        } else {
+          throw new Error("Failed to upload video");
+        }
+      });
+    return response;
+  } catch (error) {
+    console.error("Error uploading video:", error);
+  }
+};
