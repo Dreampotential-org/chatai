@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Logo from "../../PostVedio/Asset/SVG/dreampotential_Logo-01.svg";
+import Logo from "../../PostVideo/Asset/SVG/dreampotential_Logo-01.svg";
 import { Link, useNavigate } from "react-router-dom";
 import "./Home.css";
 

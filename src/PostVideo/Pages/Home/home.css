@@ -19,7 +19,7 @@
   margin: auto;
   width: 100%;
   height: 100vh;
-  background-image: url(../Asset/SVG/bg.svg);
+  background-image: url(../../Asset/SVG/bg.svg);
   background-repeat: no-repeat;
   background-position: top;
 }
@@ -88,7 +88,7 @@
   background: transparent;
 }
 
-.vedio-container {
+.video-container {
   display: flex;
   flex-direction: column;
   align-items: center;

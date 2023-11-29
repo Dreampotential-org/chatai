@@ -131,7 +131,7 @@ const changeButton = (iconButton) => {
   iconButton.textContent = "Stop";
 };
 
-const handleRecordVedio = function ({ stream, mimeType }) {
+const handleRecordVideo = function ({ stream, mimeType }) {
   startRecord();
   let recordedChunks = [];
   stopped = false;
@@ -208,13 +208,13 @@ async function recordAudio() {
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: audioRecordConstraints,
   });
-  handleRecordVedio({ stream, mimeType });
+  handleRecordVideo({ stream, mimeType });
 }
 
 async function recordVideo() {
   if (screenrecord === false) {
     screenrecord = true;
-    console.log("recondVedio if", screenrecord);
+    console.log("recondVideo if", screenrecord);
     videoElement.style.visibility = "visible";
     const mimeType = "video/webm";
     shouldStop = false;
@@ -236,7 +236,7 @@ async function recordVideo() {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     videoElement.srcObject = stream;
     changeButton(recordVideoElement);
-    handleRecordVedio({ stream, mimeType });
+    handleRecordVideo({ stream, mimeType });
     vedioRecoding = true;
   }
 }

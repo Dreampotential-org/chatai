@@ -6,11 +6,11 @@ import React, {
   useImperativeHandle,
 } from "react";
 
-const AudioRecord = forwardRef((props, ref) => {
+const Recordings = forwardRef((props, ref) => {
   const [recording, setRecording] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [recordingStopped, setRecordingStopped] = useState(false);
-  const audioRef = useRef(null);
+  const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
 
   const handleStopRecording = async () => {
@@ -24,29 +24,40 @@ const AudioRecord = forwardRef((props, ref) => {
     }
   };
 
-  // Update Preview with recorded audio
-  const updatePreview = async (audioBlob) => {
-    const recordedAudioElement = audioRef.current;
-    recordedAudioElement.src = URL.createObjectURL(audioBlob);
+  // Update Preview with recoded video
+  const updatePreview = async (videoBlob) => {
+    const recordedVideoElement = videoRef.current;
+    recordedVideoElement.src = URL.createObjectURL(videoBlob);
   };
 
   const handleStartRecording = async () => {
     setRecording(true);
     setRecordingStopped(false);
     setRecordedChunks([]);
-    const mimeType = "audio/wav"; // Use the appropriate audio MIME type
+    const mimeType = "video/mp4";
 
     const constraints = {
       audio: {
         echoCancellation: true,
       },
+      video: {
+        width: {
+          // min: 640,
+          max: 1024,
+        },
+        height: {
+          // min: 400,
+          max: 700,
+        },
+      },
     };
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      audioRef.current.srcObject = stream;
+      videoRef.current.srcObject = stream;
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
+      document.getElementById("recording-video").style.display = "flex";
 
       let chunks = [];
       mediaRecorder.ondataavailable = (e) => {
@@ -56,29 +67,29 @@ const AudioRecord = forwardRef((props, ref) => {
       };
 
       mediaRecorder.onstop = () => {
-        setRecordedChunks(chunks); // Store chunks for download on stop recording
+        setRecordedChunks(chunks); //store chunks for downlaod on stop recoding
         const blob = new Blob(chunks, { type: mimeType });
 
-        updatePreview(blob); // Display recorded audio in the preview
+        updatePreview(blob); // Display recorded video in the preview screen
 
-        audioRef.current.srcObject = null; // Reset audio preview after recording stops
+        videoRef.current.srcObject = null; // Reset webcam preview after recording stops
       };
 
-      mediaRecorder.start();
+      mediaRecorder.start(200);
     } catch (error) {
       console.error("Error accessing media devices:", error);
     }
   };
 
   useEffect(() => {
-    audioRef.current = document.getElementById("show-audio");
+    videoRef.current = document.getElementById("recording-video");
   }, []);
 
-  // Download Recorded Audio
+  // Download Recorded Video
   const handleDownload = () => {
     // Create a Promise to wait for the recorded Blob to be ready
     const blobPromise = new Promise((resolve) => {
-      const mimeType = "audio/mp3"; // Use the appropriate audio MIME type
+      const mimeType = "video/mp4";
       const blob = new Blob(recordedChunks, { type: mimeType });
       resolve(blob);
     });
@@ -90,7 +101,7 @@ const AudioRecord = forwardRef((props, ref) => {
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = url;
-      a.download = "recording.mp3";
+      a.download = "recording.mp4";
       a.click();
       window.URL.revokeObjectURL(url);
     });
@@ -99,27 +110,33 @@ const AudioRecord = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     Start() {
       handleStartRecording();
-      console.log("Start audio");
     },
     Stop() {
       handleStopRecording();
-      console.log("Stop audio");
     },
   }));
+
   return (
-    <div className="video-section audio">
-      <audio id="show-audio" autoPlay controls></audio>
+    <div
+      className="video-section"
+      style={{ minWidth: `${recording === false ? "auto" : "50%"}` }}
+    >
+      <video
+        style={{ display: "none" }}
+        id="recording-video"
+        autoPlay
+        width="640"
+        height="400"
+        controls
+      ></video>
       {recordingStopped && (
-        <button
-          onClick={handleDownload}
-          style={{ background: "transparent", border: "none" }}
-        >
+        <button className="download-btn" onClick={handleDownload}>
           <svg
             width="25"
             height="25"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#d62828ff"
+            stroke="#FFF"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -134,4 +151,4 @@ const AudioRecord = forwardRef((props, ref) => {
   );
 });
 
-export default AudioRecord;
+export default Recordings;
