@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { OpenAIApi, Configuration } from "openai";
 import { useMutation } from "react-query";
+import { chatAPI } from "@/ChatAi/services/helper";
 
 //Components
 import { Input } from "../Input/index";
@@ -22,8 +23,8 @@ import {
 import ReactMarkdown from 'react-markdown'
 import { Instructions } from "../Layout/Instructions";
 import { useAPI } from "../../store/api";
-
 export interface ChatProps { };
+
 
 interface ChatSchema {
     input: string
@@ -80,47 +81,62 @@ export const Chat = ({ ...props }: ChatProps) => {
                 message: prompt
             });
 
-            mutate(prompt, {
-                onSuccess({ status, data }, variable) {
-                    if (status === 200) {
-                        const message = String(data.choices[0].message?.content);
-                        addMessage(selectedId, {
-                            emitter: "gpt",
-                            message
-                        });
+            // mutate(prompt, {
+            //     onSuccess({ status, data }, variable) {
+            //         if (status === 200) {
+            //             const message = String(data.choices[0].message?.content);
+            //             addMessage(selectedId, {
+            //                 emitter: "gpt",
+            //                 message
+            //             });
 
-                        if (selectedRole == "New chat" || selectedRole == undefined) {
-                            editChat(selectedId, { role: variable });
-                        };
-                    }
-                    updateScroll();
-                },
-                onError(error) {
-                    type Error = {
-                        response: {
-                            data: {
-                                error: {
-                                    code: "invalid_api_key" | string,
-                                    message: string
-                                };
-                            },
-                        },
-                    };
+            //             if (selectedRole == "New chat" || selectedRole == undefined) {
+            //                 editChat(selectedId, { role: variable });
+            //             };
+            //         }
+            //         updateScroll();
+            //     },
+            //     onError(error) {
+            //         type Error = {
+            //             response: {
+            //                 data: {
+            //                     error: {
+            //                         code: "invalid_api_key" | string,
+            //                         message: string
+            //                     };
+            //                 },
+            //             },
+            //         };
 
-                    const { response } = error as Error,
-                        message = response.data.error.message;
-                    addMessage(selectedId, {
-                        emitter: "error",
-                        message
-                    });
-                    updateScroll();
-                }
-            });
+            //         const { response } = error as Error,
+            //             message = response.data.error.message;
+            //         addMessage(selectedId, {
+            //             emitter: "error",
+            //             message
+            //         });
+            //         updateScroll();
+            //     }
+            // });
         };
 
         if (selectedId) {
             if (prompt && !isLoading) {
                 sendRequest(selectedId);
+                
+    chatAPI({
+               input_content: prompt,
+      }).then((res: any) => {
+                console.log(res)
+                addMessage(selectedId, {
+                    
+                emitter: "gpt",
+                message: res.data 
+            })
+          
+        })
+        .catch((err: any) => {
+          console.error(err.msg);
+        });
             };
         } else {
             addChat(sendRequest);

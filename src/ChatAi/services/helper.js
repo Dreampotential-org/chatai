@@ -18,6 +18,30 @@ export const leadCreateApi = async (payload) => {
   }
 };
 
+//chatAPI
+export const chatAPI = async (payload) => {
+  try {
+    const tokenWithQuotes = localStorage.getItem("Token");
+  const token = tokenWithQuotes.replace(/^"(.*)"$/, "$1");
+    const res = await axiosInstance.post(
+      `${SERVER}ai/input-chat/`,
+      payload,
+      {
+      headers: {
+        // Authorization: `Bearer ${token}`,
+      },
+    }
+    );
+  console.log("hello", res);
+   
+    return res;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+
+
 export const signUPApi = async (payload) => {
   try {
     // const res = await axiosInstance.post("http://app.realtorstat.com:8021/usersystem/user/register", payload);
