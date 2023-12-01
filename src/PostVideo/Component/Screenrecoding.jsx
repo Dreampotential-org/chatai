@@ -5,6 +5,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
+import axios from "axios";
 
 const Screenrecording = forwardRef((props, ref) => {
   const [recording, setRecording] = useState(false);
@@ -12,6 +13,7 @@ const Screenrecording = forwardRef((props, ref) => {
   const [recordingStopped, setRecordingStopped] = useState(false);
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
+  const SERVER = "https://api.dreampotential.org/";
 
   const handleStopRecording = async () => {
     if (
@@ -43,7 +45,7 @@ const Screenrecording = forwardRef((props, ref) => {
       audio: { echoCancellation: true },
     });
 
-    if (window.confirm("Record audio with screen?")) {
+    if (window.confirm("Record screen?")) {
       const audioContext = new AudioContext();
       document.getElementById("screen-video").style.display = "flex";
 
@@ -83,6 +85,7 @@ const Screenrecording = forwardRef((props, ref) => {
     mediaRecorderRef.current.onstop = () => {
       const blob = new Blob(chunks, { type: mimeType });
       setRecordedChunks(chunks);
+      uploadRecordedVideo(blob);
       updatePreview(blob);
       videoRef.current.srcObject = null;
     };
@@ -116,6 +119,84 @@ const Screenrecording = forwardRef((props, ref) => {
     },
   }));
 
+  const uploadRecordedVideo = async (chunks) => {
+    const token = localStorage.getItem("Token");
+    swal({
+      title: "0%",
+      text: "Video uploading please wait.",
+      icon: "info",
+      buttons: false,
+      closeOnEsc: false,
+      closeOnClickOutside: false,
+    });
+
+    if (window.confirm("You want to upload this video?")) {
+      const file = chunks;
+      console.log(file, chunks);
+
+      try {
+        const formData = new FormData();
+        formData.append("file", file, file.name);
+        formData.append("source", window.location.host);
+        const response = axios
+          .post(
+            `${SERVER}storage/file-upload/`,
+            formData,
+            {
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            },
+            {
+              progress: (progressEvent) => {
+                if (progressEvent.lengthComputable) {
+                  console.log(progressEvent.loaded + " " + progressEvent.total);
+                  this.updateProgress(progressEvent);
+                }
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response, response.status);
+
+            if (response.status === 200) {
+              swal({
+                title: "Good job!",
+                text: "Video submitted successfully!",
+                icon: "success",
+                button: "Ok",
+              });
+              return response;
+            } else {
+              swal({
+                title: "Error Try Again",
+                text: "Sorry, there is an error please try again later.",
+                icon: "error",
+                buttons: [true, "Retry"],
+              }).then((retry) => {
+                if (retry) {
+                  const blob = new Blob(chunks, { type: mimeType });
+                  uploadRecordedVideo(blob);
+                }
+              });
+              throw new Error("Failed to upload video");
+            }
+          })
+          .then((data) => {
+            console.log("Video uploaded successfully");
+          });
+      } catch (error) {
+        swal({
+          title: "Error Try Again",
+          text: "Sorry, there is an error please try again later.",
+          icon: "error",
+          buttons: [false, "Retry"],
+        });
+        console.error("Error uploading video:", error);
+      }
+    }
+  };
+
   return (
     <div
       className="video-section"
@@ -129,7 +210,8 @@ const Screenrecording = forwardRef((props, ref) => {
         autoPlay
         width="640"
         height="400"
-        controls
+        muted
+        // {...(recordingStopped === false ? "" : "controls")}
       ></video>
       {recordingStopped && (
         <button className="download-btn" onClick={handleDownload}>

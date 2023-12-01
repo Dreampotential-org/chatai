@@ -314,7 +314,8 @@ export const logInApi = async (payload) => {
       `${SERVER}usersystem/user/login`,
       payload
     );
-    localStorage.setItem("Token", JSON.stringify(res.data.token));
+    // localStorage.setItem("Token", JSON.stringify(res.data.token));
+    localStorage.setItem("Token", res.data.token);
     console.log(JSON.stringify(res.data.token));
     return res;
   } catch (error) {
@@ -327,9 +328,9 @@ export const logInApi = async (payload) => {
 };
 
 // LIst Video
-// https://api.dreampotential.org/storage/stream-video/4
 export const listVideo = async () => {
-  const token = JSON.parse(localStorage.getItem("Token"));
+  // const token = JSON.parse(localStorage.getItem("Token"));
+  const token = localStorage.getItem("Token");
   try {
     const response = await axiosInstance
       .get(`${SERVER}storage/list_files/`, {

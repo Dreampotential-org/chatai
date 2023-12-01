@@ -3,6 +3,7 @@ import axiosInstance from "../../ChatAi/services/axios";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../Asset/CSS/UploadVideo.css";
+import { progress } from "framer-motion";
 
 const UploadVideo = () => {
   const [recordedStreamFile, setRecordedStreamFile] = useState(null);
@@ -10,10 +11,19 @@ const UploadVideo = () => {
   const SERVER = "https://api.dreampotential.org/";
   const navigate = useNavigate();
 
-  const handleUploadedVideo = async (event) => {
+  function updateProgress(e) {
+    if (e.lengthComputable) {
+      // console.log(e.loaded);
+      // console.log(e.loaded + " / " + e.total);
+      $(".swal-title").text(parseInt((e.loaded / e.total) * 100) + "%");
+    }
+  }
+
+  const handleUpload = async (event) => {
     const videoElement = document.getElementById("show-video");
     const fileInput = event.target;
-    const token = JSON.parse(localStorage.getItem("Token"));
+    const token = localStorage.getItem("Token");
+    // const token = JSON.parse(localStorage.getItem("Token"));
     swal({
       title: "0%",
       text: "Video uploading please wait.",
@@ -25,6 +35,7 @@ const UploadVideo = () => {
 
     if (fileInput.files.length > 0) {
       const file = fileInput.files[0];
+      const Globarfile = file;
 
       if (file.type.startsWith("video/")) {
         const videoURL = URL.createObjectURL(file);
@@ -34,24 +45,44 @@ const UploadVideo = () => {
 
         try {
           const formData = new FormData();
-          formData.append("file", file);
+          formData.append("file", Globarfile, Globarfile.name);
           formData.append("source", window.location.host);
-          const response = await axios
-            .post(`${SERVER}storage/file-upload/`, formData, {
-              headers: {
-                Authorization: `Token ${token}`,
+
+          const response = axios
+            .post(
+              `${SERVER}storage/file-upload/`,
+              formData,
+              {
+                headers: {
+                  Authorization: `Token ${token}`,
+                },
               },
-            })
-            .then((response) => {
+              {
+                progress: (progressEvent) => {
+                  if (progressEvent.lengthComputable) {
+                    console.log(
+                      progressEvent.loaded + " " + progressEvent.total
+                    );
+                    this.updateProgress(progressEvent);
+                  }
+                },
+              }
+            )
+            .then(async (response) => {
               console.log(response, response.status);
 
               if (response.status === 200) {
-                swal({
+                const value = await swal({
                   title: "Good job!",
                   text: "Video submitted successfully!",
                   icon: "success",
                   button: "Ok",
                 });
+                localStorage.setItem(
+                  "VideoID",
+                  JSON.stringify(response.data.id)
+                );
+                navigate(`/postVideo/videoSection/${response.data.id}`);
                 return response;
               } else {
                 swal({
@@ -62,10 +93,6 @@ const UploadVideo = () => {
                 });
                 throw new Error("Failed to upload video");
               }
-            })
-            .then((data) => {
-              console.log("Video uploaded successfully");
-              console.log(data);
             });
         } catch (error) {
           swal({
@@ -77,7 +104,13 @@ const UploadVideo = () => {
           console.error("Error uploading video:", error);
         }
       } else {
-        alert("Please select a valid video file.");
+        // alert("Please select a valid video file.");
+        swal({
+          title: "Error Try Again",
+          text: "Please select a valid video file.",
+          icon: "error",
+          buttons: [true, "Retry"],
+        });
       }
     }
   };
@@ -96,7 +129,7 @@ const UploadVideo = () => {
         id="uploadVideo"
         accept="video/*"
         style={{ display: "none" }}
-        onChange={handleUploadedVideo}
+        onChange={handleUpload}
       />
       <label htmlFor="uploadVideo" className="post-btn">
         Upload File
