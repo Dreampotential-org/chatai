@@ -6,7 +6,6 @@ import { useRef } from "react";
 import { useChat } from "../../store/chat";
 import { useForm } from "react-hook-form";
 import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { OpenAIApi, Configuration } from "openai";
 import { useMutation } from "react-query";
 import { chatAPI } from "@/ChatAi/services/helper";
 
@@ -58,17 +57,6 @@ export const Chat = ({ ...props }: ChatProps) => {
 
     const configuration = new Configuration({
         apiKey: api
-    });
-
-    const openAi = new OpenAIApi(configuration);
-
-    const { mutate, isLoading } = useMutation({
-        mutationKey: 'prompt',
-        mutationFn: async (prompt: string) => await openAi.createChatCompletion({
-            model: 'gpt-3.5-turbo',
-            max_tokens: 256,
-            messages: [{ role: 'user', content: prompt }]
-        })
     });
 
     const handleAsk = async ({ input: prompt }: ChatSchema) => {
