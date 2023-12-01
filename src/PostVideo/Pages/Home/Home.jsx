@@ -5,9 +5,8 @@ import {
   Screenrecoding,
   UploadVideo,
 } from "../../Component/index";
-import Logo from "../../Asset/SVG/dreampotential_Logo-01.svg";
-import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
+import Navbar from "../../Component/Navbar";
 
 const Home = () => {
   const [screenRecord, setScreenRecord] = useState(false);
@@ -18,8 +17,6 @@ const Home = () => {
   const screenRef = useRef(null);
   const audioRef = useRef(null);
   const vedioRef = useRef(null);
-
-  const navigate = useNavigate();
 
   // Call Screen Record Function for Recoding
   const handleScreen = () => {
@@ -55,25 +52,11 @@ const Home = () => {
       setaudioRecord(false);
     }
   };
-  const userLogOut = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
+
   return (
     <>
       <div className="main">
-        <div className="navbar">
-          <div className="logo">
-            <img src={Logo} alt="Logo" width={180} height={40} />
-          </div>
-          <div className="nav-links">
-            <Link to="/chatai">Chat Ai</Link>
-            <Link to="./viewVideo">Dashboard</Link>
-            <button type="button" className="post-btn" onClick={userLogOut}>
-              Log Out
-            </button>
-          </div>
-        </div>
+        <Navbar />
         <div
           className="post-content"
           style={{

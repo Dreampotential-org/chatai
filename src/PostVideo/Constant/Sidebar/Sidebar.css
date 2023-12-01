@@ -1,0 +1,80 @@
+.dashboard__sidebar {
+    overflow: hidden;
+    width: 70px;
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: .5rem;
+    padding: 1rem 0;
+    border-right: 2px solid var(--chakra-colors-gray-400);
+    transition: width 200ms ease;
+    background: var(--chakra-colors-blackAlpha-600);
+}
+
+.userDetail__setion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding: 1rem;
+}
+
+.userDetail__setion img {
+    border-radius: 50%;
+    box-shadow: 0 0 5px 2px var(--chakra-colors-gray-600);
+    transition: width 200ms ease;
+}
+
+.userDetail__setion h3 {
+    font-size: 1.3rem;
+    line-height: 1;
+    padding: 0.6rem 0 0;
+    color: var(--chakra-colors-linkedin-400);
+}
+
+.userDetail__setion p {
+    font-size: 0.85rem;
+    font-weight: normal;
+    color: var(--chakra-colors-gray-400);
+}
+
+.sidebar_menu {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.sidebar_menu ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.sidebar_menu ul li {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.sidebar_menu ul li {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 1rem;
+    padding: 0.5rem 0.7rem;
+    padding: 1rem;
+    border-left: 5px solid transparent;
+}
+
+.sidebar_menu ul li:hover {
+    background-color: var(--chakra-colors-blackAlpha-500);
+    border-left: 5px solid red;
+}

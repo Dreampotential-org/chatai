@@ -9,8 +9,12 @@ import './ChatAi/styles/global.css';
 import { Home, Signup, Login } from "./Pages/index";
 import ListVideo from "./PostVideo/Component/ListVideo";
 import VeiwVideo from "./PostVideo/Component/ViewVideo";
+import VideoSection from "./PostVideo/Component/VideoSection";
+import Analytics from "./PostVideo/Component/Analytics";
+// element={<VideoSection />
 
 const App = () => {
+  // const id = localStorage.getItem("VideoID");
   return (
     <React.StrictMode>
       <Providers>
@@ -23,6 +27,8 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/postVideo/listVideo" element={<ListVideo />} />
             <Route path="/postVideo/viewVideo" element={<VeiwVideo />} />
+            <Route path="/postVideo/videoSection/:id" element={<VideoSection />} />
+            <Route path="/postVideo/analytics" element={<Analytics />} />
           </Routes>
         </Router>
       </Providers>
