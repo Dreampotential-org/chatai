@@ -89,7 +89,7 @@ const VideoSection = () => {
     }
   };
 
-  const getComments = (inputComment) => {
+  const getComments = () => {
     const token = localStorage.getItem("Token");
     try {
       const response = axios
@@ -115,6 +115,45 @@ const VideoSection = () => {
   useEffect(() => {
     getComments();
     return () => {};
+  }, []);
+
+  var play_time_seconds = 0;
+
+  const incrementTime = () => {
+    play_time_seconds += 1;
+  };
+
+  useEffect(() => {
+    const video = document.getElementById("show-video");
+
+    video.addEventListener("play", () => {
+      const interval = setInterval(incrementTime, 1000);
+
+      video.addEventListener("ended", () => {
+        console.log("Ended");
+        console.log(play_time_seconds);
+        clearInterval(interval);
+      });
+      video.addEventListener("pause", () => {
+        console.log("pause");
+        console.log(play_time_seconds);
+        clearInterval(interval);
+      });
+    });
+
+    return () => {
+      // Cleanup: Remove event listeners when the component unmounts
+      video.removeEventListener("play", incrementTime);
+      video.removeEventListener("pause", () => {
+        console.log(play_time_seconds);
+        clearInterval(interval);
+      });
+      video.removeEventListener("ended", () => {
+        console.log(play_time_seconds);
+        clearInterval(interval);
+      });
+      console.log(play_time_seconds);
+    };
   }, []);
 
   return (

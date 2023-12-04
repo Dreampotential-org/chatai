@@ -47,7 +47,7 @@ const initialChatState: Chat[] = getSafeSavedChats() || [
             },
             {
                 emitter: "gpt",
-                message: "This website is a clone of the ChatGPT website interface created by Naman.."
+                message: ""
             }
         ],
     },

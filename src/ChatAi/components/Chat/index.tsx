@@ -17,7 +17,8 @@ import {
     IconButton,
     Spinner,
     Stack,
-    Text
+    Text,
+    useStatStyles
 } from "@chakra-ui/react";
 import ReactMarkdown from 'react-markdown'
 import { Instructions } from "../Layout/Instructions";
@@ -54,10 +55,11 @@ export const Chat = ({ ...props }: ChatProps) => {
     };
 
     const [parentRef] = useAutoAnimate();
+    let isLoading = false
 
-    const configuration = new Configuration({
-        apiKey: api
-    });
+    // const configuration = new Configuration({
+    //     apiKey: api
+    // });
 
     const handleAsk = async ({ input: prompt }: ChatSchema) => {
         updateScroll();
