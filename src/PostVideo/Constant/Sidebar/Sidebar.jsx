@@ -30,7 +30,7 @@ const Sidebar = () => {
     },
     {
       path: "/analytics",
-      name: "Analytcis",
+      name: "Analytics",
       icon: <MdAnalytics fontSize={iconFont} />,
     },
     {
