@@ -11,9 +11,9 @@ const Navbar = () => {
   };
   return (
     <div className="navbar">
-      <div className="logo">
+      <Link to="/postVideo" className="logo">
         <img src={Logo} alt="Logo" width={180} height={40} />
-      </div>
+      </Link>
       <div className="nav-links">
         <Link to="/postVideo/analytics">Analytics</Link>
         <Link to="/chatai">Chat Ai</Link>

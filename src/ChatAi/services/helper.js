@@ -22,25 +22,19 @@ export const leadCreateApi = async (payload) => {
 export const chatAPI = async (payload) => {
   try {
     const tokenWithQuotes = localStorage.getItem("Token");
-  const token = tokenWithQuotes.replace(/^"(.*)"$/, "$1");
-    const res = await axiosInstance.post(
-      `${SERVER}ai/input-chat/`,
-      payload,
-      {
+    const token = tokenWithQuotes.replace(/^"(.*)"$/, "$1");
+    const res = await axiosInstance.post(`${SERVER}ai/input-chat/`, payload, {
       headers: {
         // Authorization: `Bearer ${token}`,
       },
-    }
-    );
-  console.log("hello", res);
-   
+    });
+    console.log("hello", res);
+
     return res;
   } catch (error) {
     throw error.response.data;
   }
 };
-
-
 
 export const signUPApi = async (payload) => {
   try {
@@ -353,7 +347,6 @@ export const logInApi = async (payload) => {
 
 // LIst Video
 export const listVideo = async () => {
-  // const token = JSON.parse(localStorage.getItem("Token"));
   const token = localStorage.getItem("Token");
   try {
     const response = await axiosInstance

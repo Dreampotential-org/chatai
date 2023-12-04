@@ -6,6 +6,7 @@ import React, {
   useImperativeHandle,
 } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Screenrecording = forwardRef((props, ref) => {
   const [recording, setRecording] = useState(false);
@@ -14,6 +15,7 @@ const Screenrecording = forwardRef((props, ref) => {
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const SERVER = "https://api.dreampotential.org/";
+  const navigate = useNavigate();
 
   const handleStopRecording = async () => {
     if (
@@ -166,6 +168,7 @@ const Screenrecording = forwardRef((props, ref) => {
                 icon: "success",
                 button: "Ok",
               });
+              navigate(`/postVideo/videoSection/${response.data.id}`);
               return response;
             } else {
               swal({

@@ -5,6 +5,8 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AudioRecord = forwardRef((props, ref) => {
   const [recording, setRecording] = useState(false);
@@ -12,6 +14,8 @@ const AudioRecord = forwardRef((props, ref) => {
   const [recordingStopped, setRecordingStopped] = useState(false);
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
+  const SERVER = "https://api.dreampotential.org/";
+  const navigate = useNavigate();
 
   const handleStopRecording = async () => {
     if (
@@ -61,6 +65,7 @@ const AudioRecord = forwardRef((props, ref) => {
         const blob = new Blob(chunks, { type: mimeType });
 
         updatePreview(blob); // Display recorded audio in the preview
+        uploadRecordedVideo(blob); //Upload recoded audio
 
         audioRef.current.srcObject = null; // Reset audio preview after recording stops
       };
@@ -79,7 +84,7 @@ const AudioRecord = forwardRef((props, ref) => {
   const handleDownload = () => {
     // Create a Promise to wait for the recorded Blob to be ready
     const blobPromise = new Promise((resolve) => {
-      const mimeType = "audio/mp3"; // Use the appropriate audio MIME type
+      const mimeType = "audio/webm"; // Use the appropriate audio MIME type
       const blob = new Blob(recordedChunks, { type: mimeType });
       resolve(blob);
     });
@@ -107,6 +112,85 @@ const AudioRecord = forwardRef((props, ref) => {
       console.log("Stop audio");
     },
   }));
+
+  const uploadRecordedVideo = async (chunks) => {
+    const token = localStorage.getItem("Token");
+    swal({
+      title: "0%",
+      text: "Video uploading please wait.",
+      icon: "info",
+      buttons: false,
+      closeOnEsc: false,
+      closeOnClickOutside: false,
+    });
+
+    if (window.confirm("You want to upload this Audio?")) {
+      const file = chunks;
+      console.log(file, chunks);
+
+      try {
+        const formData = new FormData();
+        formData.append("file", file, file.name);
+        formData.append("source", window.location.host);
+        const response = axios
+          .post(
+            `${SERVER}storage/file-upload/`,
+            formData,
+            {
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            },
+            {
+              progress: (progressEvent) => {
+                if (progressEvent.lengthComputable) {
+                  console.log(progressEvent.loaded + " " + progressEvent.total);
+                  this.updateProgress(progressEvent);
+                }
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response, response.status);
+
+            if (response.status === 200) {
+              swal({
+                title: "Good job!",
+                text: "Video submitted successfully!",
+                icon: "success",
+                button: "Ok",
+              });
+              navigate(`/postVideo/videoSection/${response.data.id}`);
+              return response;
+            } else {
+              swal({
+                title: "Error Try Again",
+                text: "Sorry, there is an error please try again later.",
+                icon: "error",
+                buttons: [true, "Retry"],
+              }).then((retry) => {
+                if (retry) {
+                  const blob = new Blob(chunks, { type: mimeType });
+                  uploadRecordedVideo(blob);
+                }
+              });
+              throw new Error("Failed to upload video");
+            }
+          })
+          .then((data) => {
+            console.log("Video uploaded successfully");
+          });
+      } catch (error) {
+        swal({
+          title: "Error Try Again",
+          text: "Sorry, there is an error please try again later.",
+          icon: "error",
+          buttons: [false, "Retry"],
+        });
+        console.error("Error uploading video:", error);
+      }
+    }
+  };
   return (
     <div className="video-section audio" style={{ visibility: "hidden" }}>
       <audio id="show-audio" autoPlay controls></audio>

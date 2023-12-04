@@ -70,9 +70,6 @@ const ViewVideo = () => {
                 "https://api.dreampotential.org/storage/stream-video/" + item.id
               }
               id="recording-video"
-              // autoPlay
-              // width="300"
-              // height="200"
               controls
             ></video>
             <div className="box_details">

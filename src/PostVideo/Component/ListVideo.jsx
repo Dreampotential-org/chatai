@@ -4,6 +4,7 @@ import "../Asset/CSS/list.css";
 
 const ListVideo = () => {
   const [videos, setVideos] = useState([]);
+  const SERVER = "https://api.dreampotential.org/";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,13 +24,7 @@ const ListVideo = () => {
       <div id="list">
         {videos.map((item) => (
           <div className="list-box" key={item.id}>
-            <a
-              href={
-                "https://api.dreampotential.org/storage/stream-video/" + item.id
-              }
-            >
-              Video
-            </a>
+            <a href={`${SERVER}storage/stream-video/${item.id}`}>Video</a>
             <p>{item.created_at}</p>
             <p>{item.source}</p>
           </div>

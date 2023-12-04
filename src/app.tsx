@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Providers } from './ChatAi/components/Providers';
 import ReactDOM from 'react-dom';
 import PostVideo from "./PostVideo/Pages/Home/Home";
-import ChatAi from './ChatAi/pages/Home';
+// import ChatAi from './ChatAi/pages/Home';
 import './ChatAi/styles/global.css';
 import { Home, Signup, Login } from "./Pages/index";
 import ListVideo from "./PostVideo/Component/ListVideo";
@@ -21,7 +21,7 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/chatai" element={<ChatAi />} />
+            {/* <Route path="/chatai" element={<ChatAi />} /> */}
             <Route path="/postVideo" element={<PostVideo />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
