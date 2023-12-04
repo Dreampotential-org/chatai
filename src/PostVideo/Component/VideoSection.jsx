@@ -62,7 +62,6 @@ const VideoSection = () => {
             });
             console.log(response);
             getComments();
-            // navigate(`/postVideo/videoSection/${response.data.id}`);
             return response;
           } else {
             swal({
@@ -100,13 +99,7 @@ const VideoSection = () => {
           },
         })
         .then((response) => {
-          console.log(response, response.status);
           if (response.status === 200) {
-            // response.data.map((data, index) => {
-            //   console.log(index);
-            //   setComments([...comments, data.message]);
-            // });
-            // console.log(comments);
             const newComments = response.data.map((data) => data.message);
             setComments(newComments);
             return response;

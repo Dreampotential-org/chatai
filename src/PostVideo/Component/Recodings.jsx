@@ -5,6 +5,8 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Recordings = forwardRef((props, ref) => {
   const [recording, setRecording] = useState(false);
@@ -12,6 +14,8 @@ const Recordings = forwardRef((props, ref) => {
   const [recordingStopped, setRecordingStopped] = useState(false);
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
+  const SERVER = "https://api.dreampotential.org/";
+  const navigate = useNavigate();
 
   const handleStopRecording = async () => {
     if (
@@ -71,7 +75,7 @@ const Recordings = forwardRef((props, ref) => {
         const blob = new Blob(chunks, { type: mimeType });
 
         updatePreview(blob); // Display recorded video in the preview screen
-
+        uploadRecordedVideo(blob);
         videoRef.current.srcObject = null; // Reset webcam preview after recording stops
       };
 
@@ -116,6 +120,84 @@ const Recordings = forwardRef((props, ref) => {
     },
   }));
 
+  const uploadRecordedVideo = async (chunks) => {
+    const token = localStorage.getItem("Token");
+    swal({
+      title: "0%",
+      text: "Video uploading please wait.",
+      icon: "info",
+      buttons: false,
+      closeOnEsc: false,
+      closeOnClickOutside: false,
+    });
+
+    if (window.confirm("You want to upload this video?")) {
+      const file = chunks;
+      console.log(file, chunks);
+
+      try {
+        const formData = new FormData();
+        formData.append("file", file, file.name);
+        formData.append("source", window.location.host);
+        const response = axios
+          .post(
+            `${SERVER}storage/file-upload/`,
+            formData,
+            {
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            },
+            {
+              progress: (progressEvent) => {
+                if (progressEvent.lengthComputable) {
+                  console.log(progressEvent.loaded + " " + progressEvent.total);
+                  this.updateProgress(progressEvent);
+                }
+              },
+            }
+          )
+          .then(async (response) => {
+            console.log(response, response.status);
+
+            if (response.status === 200) {
+              const value = await swal({
+                title: "Good job!",
+                text: "Video submitted successfully!",
+                icon: "success",
+                button: "Ok",
+              });
+              navigate(`/postVideo/videoSection/${response.data.id}`);
+              return response;
+            } else {
+              swal({
+                title: "Error Try Again",
+                text: "Sorry, there is an error please try again later.",
+                icon: "error",
+                buttons: [true, "Retry"],
+              }).then((retry) => {
+                if (retry) {
+                  const blob = new Blob(chunks, { type: mimeType });
+                  uploadRecordedVideo(blob);
+                }
+              });
+              throw new Error("Failed to upload video");
+            }
+          })
+          .then((data) => {
+            console.log("Video uploaded successfully");
+          });
+      } catch (error) {
+        swal({
+          title: "Error Try Again",
+          text: "Sorry, there is an error please try again later.",
+          icon: "error",
+          buttons: [false, "Retry"],
+        });
+        console.error("Error uploading video:", error);
+      }
+    }
+  };
   return (
     <div
       className="video-section"

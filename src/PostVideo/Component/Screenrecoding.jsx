@@ -158,11 +158,11 @@ const Screenrecording = forwardRef((props, ref) => {
               },
             }
           )
-          .then((response) => {
+          .then(async (response) => {
             console.log(response, response.status);
 
             if (response.status === 200) {
-              swal({
+              const value = await swal({
                 title: "Good job!",
                 text: "Video submitted successfully!",
                 icon: "success",
