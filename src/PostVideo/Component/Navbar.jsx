@@ -7,7 +7,7 @@ const Navbar = () => {
 
   const userLogOut = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    navigate("/login");
   };
   return (
     <div className="navbar">
@@ -15,9 +15,9 @@ const Navbar = () => {
         <img src={Logo} alt="Logo" width={180} height={40} />
       </Link>
       <div className="nav-links">
-        <Link to="/postVideo/analytics">Analytics</Link>
+        <Link to="/postVideo/analytics">Dashboard</Link>
         <Link to="/chatai">Chat Ai</Link>
-        <Link to="/postVideo/viewVideo">Dashboard</Link>
+        <Link to="/postVideo/viewVideo">Videos</Link>
         <button type="button" className="post-btn" onClick={userLogOut}>
           Log Out
         </button>

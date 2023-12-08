@@ -75,6 +75,5 @@
 }
 
 .sidebar_menu ul li:hover {
-    background-color: var(--chakra-colors-blackAlpha-500);
-    border-left: 5px solid red;
+    background-color: var(--chakra-colors-blue-900);
 }

@@ -43,6 +43,7 @@ const Home = () => {
             <div className="link-container">
               <Link to='/chatai'>Chat Ai</Link>
               <Link to='/postVideo'>Post Video</Link>
+              <Link to='/mail'>Mail</Link>
             </div>
           </div>
           :

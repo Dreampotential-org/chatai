@@ -12,11 +12,8 @@ const UploadVideo = () => {
   const navigate = useNavigate();
 
   function updateProgress(e) {
-    if (e.lengthComputable) {
-      // console.log(e.loaded);
-      // console.log(e.loaded + " / " + e.total);
-      $(".swal-title").text(parseInt((e.loaded / e.total) * 100) + "%");
-    }
+    let swaltitle = document.querySelector(".swal-title");
+    swaltitle.textContent = parseInt((e.loaded / e.total) * 100) + "%";
   }
 
   const handleUpload = async (event) => {
@@ -49,25 +46,15 @@ const UploadVideo = () => {
           formData.append("source", window.location.host);
 
           const response = axios
-            .post(
-              `${SERVER}storage/file-upload/`,
-              formData,
-              {
-                headers: {
-                  Authorization: `Token ${token}`,
-                },
+            .post(`${SERVER}storage/file-upload/`, formData, {
+              headers: {
+                Authorization: `Token ${token}`,
               },
-              {
-                progress: (progressEvent) => {
-                  if (progressEvent.lengthComputable) {
-                    console.log(
-                      progressEvent.loaded + " " + progressEvent.total
-                    );
-                    this.updateProgress(progressEvent);
-                  }
-                },
-              }
-            )
+              onUploadProgress: (progressEvent) => {
+                // console.log(progressEvent.loaded + " " + progressEvent.total);
+                updateProgress(progressEvent);
+              },
+            })
             .then(async (response) => {
               console.log(response, response.status);
 

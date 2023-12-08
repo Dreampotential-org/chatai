@@ -13,10 +13,12 @@ import { BsCollectionPlayFill, BsFileMusic } from "react-icons/bs";
 import { FaMagic, FaBars } from "react-icons/fa";
 import "./Sidebar.css";
 
-const Sidebar = () => {
+const Sidebar = ({ handleToggleSection }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [view, setView] = useState("Dashboard");
   const toggle = () => setIsOpen(!isOpen);
   const iconFont = 22;
+
   const menuItem = [
     {
       path: "/",
@@ -43,11 +45,11 @@ const Sidebar = () => {
       name: "Subtitle",
       icon: <MdOutlineSubtitles fontSize={iconFont} />,
     },
-    {
-      path: "/productList",
-      name: "Copyright",
-      icon: <MdCopyright fontSize={iconFont} />,
-    },
+    // {
+    //   path: "/productList",
+    //   name: "Copyright",
+    //   icon: <MdCopyright fontSize={iconFont} />,
+    // },
     {
       path: "/productList",
       name: "Earn",
@@ -64,6 +66,16 @@ const Sidebar = () => {
       icon: <BsFileMusic fontSize={iconFont} />,
     },
   ];
+
+  const handleSection = (section) => {
+    handleToggleSection(section);
+    setView(section);
+  };
+
+  let active = {
+    backgroundColor: "var(--chakra-colors-blackAlpha-500)",
+    borderLeft: "5px solid red",
+  };
 
   return (
     <div
@@ -96,7 +108,14 @@ const Sidebar = () => {
       <div className="sidebar_menu">
         <ul>
           {menuItem.map((item, index) => (
-            <li key={index} className="link">
+            <li
+              key={index}
+              className="link"
+              onClick={() => {
+                handleSection(item.name);
+              }}
+              style={view === item.name ? { ...active } : {}}
+            >
               <div className="icon">{item.icon}</div>
               <div
                 style={{ display: isOpen ? "block" : "none" }}

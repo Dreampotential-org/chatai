@@ -16,15 +16,44 @@ import Graph from "../Constant/Graph/Graph";
 
 const Analytics = () => {
   const iconFont = 16;
+  const [toggleSection, setToggleSection] = useState({
+    Dashboard: true,
+    Content: false,
+    Analytics: false,
+    Comments: false,
+    Subtitle: false,
+    Earn: false,
+    Customization: false,
+    Audio: false,
+  });
+
+  const handleToggleSection = (toggle) => {
+    setToggleSection(() => ({
+      Dashboard: toggle === "Dashboard" && true,
+      Content: toggle === "Content" && true,
+      Analytics: toggle === "Analytics" && true,
+      Comments: toggle === "Comments" && true,
+      Subtitle: toggle === "Subtitle" && true,
+      Earn: toggle === "Earn" && true,
+      Customization: toggle === "Customization" && true,
+      Audio: toggle === "Audio" && true,
+    }));
+  };
+
   return (
     <div className="analytics">
       <Navbar />
       <div className="dashboard__content">
-        <Sidebar />
+        <Sidebar handleToggleSection={handleToggleSection} />
         <div className="db__sidebar_Compoenents">
-          {/* <Dashboard iconFont={iconFont} /> */}
-          {/* <Content iconFont={iconFont} /> */}
-          <Graphs />
+          {toggleSection.Dashboard && <Dashboard iconFont={iconFont} />}
+          {toggleSection.Content && <Content iconFont={iconFont} />}
+          {toggleSection.Analytics && <Graphs />}
+          {toggleSection.Comments && <Dashboard iconFont={iconFont} />}
+          {toggleSection.Subtitle && <Dashboard iconFont={iconFont} />}
+          {toggleSection.Earn && <Dashboard iconFont={iconFont} />}
+          {toggleSection.Customization && <Dashboard iconFont={iconFont} />}
+          {toggleSection.Audio && <Dashboard iconFont={iconFont} />}
         </div>
       </div>
     </div>
@@ -106,7 +135,6 @@ const Dashboard = ({ iconFont }) => {
               <Link to="#">SEE COMMENTS (0)</Link>
             </div>
           </div>
-          {/* <div className="grid__box"></div> */}
         </div>
         <div className="grid__colo">
           <div className="grid__box flex__col flex__start">
@@ -251,28 +279,19 @@ const Graphs = () => {
   });
 
   const handleToggleSection = (toggle) => {
-    console.log(toggle);
-    setToggleSection((prevState) => ({
-      view: toggle === "view" ? !prevState.view : false,
-      watchtime: toggle === "watchtime" ? !prevState.watchtime : false,
-      followers: toggle === "followers" ? !prevState.followers : false,
+    setToggleSection(() => ({
+      view: toggle === "view" && true,
+      watchtime: toggle === "watchtime" && true,
+      followers: toggle === "followers" && true,
     }));
   };
 
-  const labels = [
-    "Jan",
-    "Feb",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  let active = {
+    borderTop: "5px solid var(--chakra-colors-blue-400)",
+    borderLeft: "1px solid var(--chakra-colors-gray-500)",
+    borderRight: "1px solid var(--chakra-colors-gray-500)",
+    backgroundColor: "var(--chakra-colors-gray-700)",
+  };
 
   return (
     <div className="container" style={{ padding: "1rem 0" }}>
@@ -289,19 +308,12 @@ const Graphs = () => {
         </div>
         <div>
           <div className="dashboard__chart">
-            <div
-              className="title flex__row flex__center"
-              style={{ padding: "1rem 2rem", width: "100%" }}
-            >
-              <h1 style={{ fontSize: "2.3rem" }}>Channel dashboard</h1>
-            </div>
             <div className="graph__container">
               <div className="graph__section flex__row flex__center">
                 <div
                   className="g__section flex__col flex__center"
-                  onClick={() => {
-                    handleToggleSection("view");
-                  }}
+                  onClick={() => handleToggleSection("view")}
+                  style={toggleSection.view ? { ...active } : {}}
                 >
                   <span>Views</span>
                   <p>10</p>
@@ -309,9 +321,8 @@ const Graphs = () => {
                 </div>
                 <div
                   className="g__section flex__col flex__center"
-                  onClick={() => {
-                    handleToggleSection("watchtime");
-                  }}
+                  onClick={() => handleToggleSection("watchtime")}
+                  style={toggleSection.watchtime ? { ...active } : {}}
                 >
                   <span>Watch time (hours)</span>
                   <p>0.0</p>
@@ -319,19 +330,21 @@ const Graphs = () => {
                 </div>
                 <div
                   className="g__section flex__col flex__center"
-                  onClick={() => {
-                    handleToggleSection("followers");
-                  }}
+                  onClick={() => handleToggleSection("followers")}
+                  style={toggleSection.followers ? { ...active } : {}}
                 >
                   <span>Followers </span>
                   <p>+1</p>
                   <span>94% less than previous 28 days</span>
                 </div>
               </div>
-              <div className="graph__toggle">
-                {toggleSection.view && <Graph labels={labels} />}
-                {toggleSection.watchtime && <Graph labels={labels} />}
-                {toggleSection.followers && <Graph labels={labels} />}
+              <div
+                className="graph__toggle"
+                style={{ width: "100%", height: "400px" }}
+              >
+                {toggleSection.view && <Graph />}
+                {toggleSection.watchtime && <Graph />}
+                {toggleSection.followers && <Graph />}
               </div>
             </div>
           </div>

@@ -12,6 +12,7 @@ const ViewVideo = () => {
       try {
         const res = await listVideo();
         setVideos(res.data);
+        console.log(res);
       } catch (error) {
         console.error("Error fetching videos:", error);
       }

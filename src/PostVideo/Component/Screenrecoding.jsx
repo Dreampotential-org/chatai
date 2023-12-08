@@ -121,6 +121,11 @@ const Screenrecording = forwardRef((props, ref) => {
     },
   }));
 
+  function updateProgress(e) {
+    let swaltitle = document.querySelector(".swal-title");
+    swaltitle.textContent = parseInt((e.loaded / e.total) * 100) + "%";
+  }
+
   const uploadRecordedVideo = async (chunks) => {
     const token = localStorage.getItem("Token");
     swal({
@@ -147,6 +152,10 @@ const Screenrecording = forwardRef((props, ref) => {
             {
               headers: {
                 Authorization: `Token ${token}`,
+              },
+              onUploadProgress: (progressEvent) => {
+                // console.log(progressEvent.loaded + " " + progressEvent.total);
+                updateProgress(progressEvent);
               },
             },
             {
