@@ -27,6 +27,7 @@
   background-image: url(../../Asset/SVG/bg.svg);
   background-repeat: no-repeat;
   background-position: top;
+  background-size: cover;
 }
 
 .navbar {

@@ -36,7 +36,6 @@ export const sentMail = async (payload) => {
       })
       .then((response) => {
         if (response.status === 200) {
-          console.log(response);
           return response;
         } else {
           throw new Error("Failed to upload video");

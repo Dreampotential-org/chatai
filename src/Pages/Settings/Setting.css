@@ -1,0 +1,159 @@
+.setting {
+    display: grid;
+    grid-template-columns: 0.3fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100vw;
+    height: 100vh;
+}
+
+.row_1 {
+    background-color: #1C1C24;
+    width: 100%;
+    height: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+
+.row_1_top {
+    width: 100%;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+.row_1_top a {
+    width: 100%;
+}
+
+.row_1_top a img {
+    padding: 1rem;
+    max-width: 200px;
+}
+
+.row_1_top ul {
+    width: 100%;
+    align-items: flex-start;
+    gap: 0.2rem;
+}
+
+.row_1_top ul li {
+    color: #39A8B4;
+    padding: .7rem 0.8rem;
+    border-left: 4px solid transparent;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.05rem;
+    font-family: var(--p-font);
+    font-weight: normal;
+}
+
+.row_1_top ul li:hover {
+    background-color: #2B2F3B;
+}
+
+.liActive {
+    border-left: 4px solid #FFF !important;
+    background-color: #2B2F3B;
+}
+
+.row_1 button {
+    width: 100%;
+    padding: 1rem;
+}
+
+.row_2 {
+    background-color: #2B2F3B;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+.general,
+.security,
+.Subscription {
+    gap: 1rem;
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.info {
+    gap: 1rem;
+    width: 500px;
+}
+
+.info span {
+    color: #ffffff7b;
+    font-size: 1.1rem;
+    font-family: var(--p-font);
+}
+
+.info__input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background-color: #ffffff37;
+    border-radius: 20px;
+
+}
+
+.general .info__input {
+    cursor: not-allowed;
+}
+
+.info__input p {
+    font-size: 1rem;
+    color: #131721;
+}
+
+.info__input input {
+    font-size: 1rem;
+    background-color: transparent;
+    width: 100%;
+    color: var(--gray-200);
+}
+
+.info button {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--chakra-colors-blue-600);
+    background-color: var(--chakra-colors-blue-600);
+    color: var(--chakra-colors-gray-300);
+}
+
+.info button:hover {
+    background-color: transparent;
+}
+
+.Subscription h1 {
+    font-size: 2.5rem;
+    font-family: var(--p-font);
+}
+
+.subs_details {
+    gap: 1rem;
+    align-items: center;
+}
+
+.subs_details p {
+    font-size: 1rem;
+    color: var(--CTA);
+    font-weight: 500;
+}
+
+.subs_details span {
+    color: var(--chakra-colors-gray-400);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.sub_payment {
+    color: var(--chakra-colors-linkedin-700);
+    font-size: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+
+.sub_payment:hover {
+    text-decoration: underline;
+}

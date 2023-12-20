@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Logo from "../../PostVideo/Asset/SVG/dreampotential_Logo-01.svg";
+import Logo from "../../../PostVideo/Asset/SVG/dreampotential_Logo-01.svg";
 import { Link, useNavigate } from "react-router-dom";
 import "./Home.css";
 
-import Nothing from "../Asset/Nothing.svg";
-import Elon from "../../PostVideo/Asset/Image/ElonMush.jpg";
+import Nothing from "../../Asset/Nothing.svg";
+import Elon from "../../../PostVideo/Asset/Image/ElonMush.jpg";
 
 import { MdOutlineEdit, MdAttachFile, MdLink } from "react-icons/md";
 import { CiMinimize1, CiMaximize1, CiStar } from "react-icons/ci";
@@ -14,7 +14,8 @@ import { FaWindowMinimize } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { FaBars } from "react-icons/fa";
 
-import { getMails, sentMail } from "../services/helper";
+import { getMails, sentMail } from "../../services/helper";
+import { useToast } from "@chakra-ui/react";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ const Home = () => {
   const [sentModalMin, setSentModalMin] = useState(false);
   const [sideBar, setSideBar] = useState(true);
   const [attachments, setAttachments] = useState([]);
+  const toast = useToast();
+  // const toastIdRef = React.useRef();
 
   const [toggleSection, setToggleSection] = useState({
     Groups: false,
@@ -85,11 +88,16 @@ const Home = () => {
 
   const fetch = async (method) => {
     try {
-      if (typeof method === "function") {
-        const response = await method();
+      const response = await method();
+      if (response.status === 200) {
         const email = response.data.map((data) => data);
         setMails(email);
       } else {
+        toast({
+          title: "Please reload the page some error occurs",
+          status: "error",
+          isClosable: true,
+        });
         throw new Error("Invalid method");
       }
     } catch (error) {
@@ -133,8 +141,22 @@ const Home = () => {
 
     try {
       const response = await sentMail(body);
-      const email = response.data.map((data) => data);
-      setMails(email);
+      if (response.status === 200) {
+        toast({
+          title: "Email sent successfully",
+          status: "success",
+          isClosable: true,
+        });
+        console.log(response);
+        return response;
+      } else {
+        toast({
+          title: "Email not sent some error occured, please try again!",
+          status: "success",
+          isClosable: true,
+        });
+        throw new Error("Failed to upload video");
+      }
     } catch (error) {
       if (error.response) {
         throw error.response.data;
@@ -430,6 +452,7 @@ const Home = () => {
           </form>
         </div>
       </div>
+      <div className="toast"></div>
     </div>
   );
 };

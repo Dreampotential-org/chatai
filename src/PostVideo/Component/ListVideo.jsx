@@ -24,7 +24,7 @@ const ListVideo = () => {
       <div id="list">
         {videos.map((item) => (
           <div className="list-box" key={item.id}>
-            <a href={`${SERVER}storage/stream-video/${item.id}`}>Video</a>
+            <Link to={`${SERVER}storage/stream-video/${item.id}`}>Video</Link>
             <p>{item.created_at}</p>
             <p>{item.source}</p>
           </div>

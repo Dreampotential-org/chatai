@@ -47,13 +47,20 @@
     background-color: var(--prussian-blue);
 }
 
+.right__top {
+    width: 100%;
+    align-items: end;
+    justify-content: end;
+    gap: 1rem;
+}
+
 .auth-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 90%;
+    height: 80%;
     gap: 1rem;
 }
 
@@ -81,8 +88,7 @@
     line-height: 1.2;
 }
 
-.link-container a,
-.nav button {
+.link-container a {
     padding: 0.6rem 1rem;
     border-radius: 5px;
     font-size: 1.1rem;
@@ -91,8 +97,7 @@
     color: var(--white) !important;
 }
 
-.link-container a:hover,
-.nav button:hover {
+.link-container a:hover {
     background-color: transparent;
 }
 

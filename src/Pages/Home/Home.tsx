@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../PostVideo/Asset/SVG/dreampotential_Logo-01.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoIosLogOut } from "react-icons/io";
 import "./Home.css";
 
 const Home = () => {
@@ -8,16 +10,16 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('Token');
+    const token = localStorage.getItem("Token");
     if (token !== null) {
-      setAuthTrue(true)
+      setAuthTrue(true);
     } else {
-      setAuthTrue(false)
+      setAuthTrue(false);
     }
   }, [Home]);
 
   const userLogOut = () => {
-    setAuthTrue(false)
+    setAuthTrue(false);
     localStorage.removeItem("Token");
     navigate("/");
   };
@@ -29,7 +31,6 @@ const Home = () => {
           <div className="logo">
             <img src={Logo} alt="Logo" width={250} height={100} />
           </div>
-          {authTrue && <button type="button" onClick={userLogOut}>Logout</button>}
         </div>
         <div className="left-content">
           <h1>Help me debug</h1>
@@ -37,25 +38,35 @@ const Home = () => {
         </div>
       </div>
       <div className="right">
-        {authTrue ?
+        <div className="right__top flex__row">
+          {authTrue && (<>
+            <Link to='/settings'>
+              <IoSettingsOutline color="#FFF" fontSize={32}/>
+            </Link>
+            <button type="button" onClick={userLogOut}>
+              <IoIosLogOut color="#FFF" fontSize={32}/>
+            </button>
+          </>
+          )}
+        </div>
+        {authTrue ? (
           <div className="auth-section">
             <h3>Get Started</h3>
             <div className="link-container">
-              <Link to='/chatai'>Chat Ai</Link>
-              <Link to='/postVideo'>Post Video</Link>
-              <Link to='/mail'>Mail</Link>
+              <Link to="/chatai">Chat Ai</Link>
+              <Link to="/postVideo">Post Video</Link>
+              <Link to="/mail">Mail</Link>
             </div>
           </div>
-          :
+        ) : (
           <div className="auth-section">
             <h3>Get Started</h3>
             <div className="link-container">
-              <Link to='/login'>Log in</Link>
-              <Link to='/signup'>Sign up</Link>
+              <Link to="/login">Log in</Link>
+              <Link to="/signup">Sign up</Link>
             </div>
           </div>
-
-        }
+        )}
         <div className="termService">
           <p>Dream Potential</p>
           <div className="services">
@@ -66,7 +77,7 @@ const Home = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Home;

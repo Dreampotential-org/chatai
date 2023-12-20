@@ -8,8 +8,20 @@ import { IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
 import { SiSimpleanalytics } from "react-icons/si";
 import { AiOutlineLike } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
-import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import { RiYoutubeLine } from "react-icons/ri";
+import {
+  MdAnalytics,
+  MdCopyright,
+  MdDashboard,
+  MdOutlineAttachMoney,
+  MdOutlineInsertComment,
+  MdOutlineSubtitles,
+  MdCancelPresentation,
+  MdDeleteOutline,
+  MdOutlineEdit,
+} from "react-icons/md";
+import { BsCollectionPlayFill, BsFileMusic } from "react-icons/bs";
+import { FaMagic, FaBars } from "react-icons/fa";
 
 import { listVideo } from "../../ChatAi/services/helper";
 import Graph from "../Constant/Graph/Graph";
@@ -26,6 +38,41 @@ const Analytics = () => {
     Customization: false,
     Audio: false,
   });
+
+  const menuItem = [
+    {
+      name: "Dashboard",
+      icon: <MdDashboard fontSize={iconFont} />,
+    },
+    {
+      name: "Content",
+      icon: <BsCollectionPlayFill fontSize={iconFont} />,
+    },
+    {
+      name: "Analytics",
+      icon: <MdAnalytics fontSize={iconFont} />,
+    },
+    {
+      name: "Comments",
+      icon: <MdOutlineInsertComment fontSize={iconFont} />,
+    },
+    {
+      name: "Subtitle",
+      icon: <MdOutlineSubtitles fontSize={iconFont} />,
+    },
+    {
+      name: "Earn",
+      icon: <MdOutlineAttachMoney fontSize={iconFont} />,
+    },
+    {
+      name: "Customization",
+      icon: <FaMagic fontSize={iconFont} />,
+    },
+    {
+      name: "Audio library",
+      icon: <BsFileMusic fontSize={iconFont} />,
+    },
+  ];
 
   const handleToggleSection = (toggle) => {
     setToggleSection(() => ({
@@ -44,7 +91,10 @@ const Analytics = () => {
     <div className="analytics">
       <Navbar />
       <div className="dashboard__content">
-        <Sidebar handleToggleSection={handleToggleSection} />
+        <Sidebar
+          handleToggleSection={handleToggleSection}
+          menuItem={menuItem}
+        />
         <div className="db__sidebar_Compoenents">
           {toggleSection.Dashboard && <Dashboard iconFont={iconFont} />}
           {toggleSection.Content && <Content iconFont={iconFont} />}

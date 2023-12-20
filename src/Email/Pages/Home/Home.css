@@ -1,7 +1,7 @@
 input:focus,
 textarea:focus {
     outline: none;
-    border: none;
+    /* border: none; */
 }
 
 .mail__container {

@@ -1,71 +1,14 @@
 import React, { useState } from "react";
 import ElonDP from "../../Asset/Image/ElonMush.jpg";
-import {
-  MdAnalytics,
-  MdCopyright,
-  MdDashboard,
-  MdOutlineAttachMoney,
-  MdOutlineInsertComment,
-  MdOutlineSubtitles,
-  MdCancelPresentation,
-} from "react-icons/md";
-import { BsCollectionPlayFill, BsFileMusic } from "react-icons/bs";
-import { FaMagic, FaBars } from "react-icons/fa";
+import { MdCancelPresentation } from "react-icons/md";
+import { FaBars } from "react-icons/fa";
 import "./Sidebar.css";
 
-const Sidebar = ({ handleToggleSection }) => {
+const Sidebar = ({ handleToggleSection, menuItem }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState("Dashboard");
   const toggle = () => setIsOpen(!isOpen);
   const iconFont = 22;
-
-  const menuItem = [
-    {
-      path: "/",
-      name: "Dashboard",
-      icon: <MdDashboard fontSize={iconFont} />,
-    },
-    {
-      path: "/about",
-      name: "Content",
-      icon: <BsCollectionPlayFill fontSize={iconFont} />,
-    },
-    {
-      path: "/analytics",
-      name: "Analytics",
-      icon: <MdAnalytics fontSize={iconFont} />,
-    },
-    {
-      path: "/comment",
-      name: "Comments",
-      icon: <MdOutlineInsertComment fontSize={iconFont} />,
-    },
-    {
-      path: "/product",
-      name: "Subtitle",
-      icon: <MdOutlineSubtitles fontSize={iconFont} />,
-    },
-    // {
-    //   path: "/productList",
-    //   name: "Copyright",
-    //   icon: <MdCopyright fontSize={iconFont} />,
-    // },
-    {
-      path: "/productList",
-      name: "Earn",
-      icon: <MdOutlineAttachMoney fontSize={iconFont} />,
-    },
-    {
-      path: "/productList",
-      name: "Customization",
-      icon: <FaMagic fontSize={iconFont} />,
-    },
-    {
-      path: "/productList",
-      name: "Audio library",
-      icon: <BsFileMusic fontSize={iconFont} />,
-    },
-  ];
 
   const handleSection = (section) => {
     handleToggleSection(section);
