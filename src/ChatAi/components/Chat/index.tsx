@@ -1,5 +1,6 @@
 //Modules
-import gptAvatar from "../../assets/gpt-avatar.svg";
+// import gptAvatar from "../../assets/gpt-avatar.svg";
+import gptAvatar from "../../assets/chatai_logo.png";
 import warning from "../../assets/warning.svg";
 import user from "../../assets/user.png";
 import { useRef } from "react";
@@ -132,6 +133,7 @@ export const Chat = ({ ...props }: ChatProps) => {
             addChat(sendRequest);
         };
     };
+    
 
     return (
         <Stack

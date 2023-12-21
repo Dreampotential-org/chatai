@@ -6,7 +6,7 @@ import { CSSProperties, useEffect, useState } from "react";
 import store from "store2";
 import { motion } from "framer-motion";
 import './index.css';
-import AuthPage from "../../pages/AuthPage";
+// import AuthPage from "../../pages/AuthPage";
 import { useNavigate } from "react-router-dom";
 
 //Components
@@ -80,6 +80,14 @@ export const Sidebar = ({ isResponsive}: SideBarProps) => {
         navigate('/login')
         localStorage.clear();
     }
+
+ const FAQ = () => {
+        navigate('/FAQ')
+       
+    }
+    
+
+
     
     const[textBtn,setTextbtn] = useState(false)
     useEffect(() => {
@@ -90,6 +98,12 @@ export const Sidebar = ({ isResponsive}: SideBarProps) => {
             setTextbtn(false)
         }
     },[])
+
+   const handleUpgradeClick = () => {
+    // Replace 'your_link_here' with the actual link you want to open
+    window.open('https://checkout.stripe.com/c/pay/cs_live_a1Tp8gCcmSIEyWrvC0M9IUPCRLqCosMCQULN2QuDzpEpuETR3VXpJbdgK5#fidkdWxOYHwnPyd1blppbHNgWjNrQDFJZ0hmPTVST2hEQTZValNqbUlzSDU1TmFHV39mNEsnKSdobGF2Jz9%2BJ2JwbGEnPydgMDAwZmAxYygwZzw1KDEyY2AoPDJkZihjYDY3NzFhMzc8ZzVjNGFmPDQnKSdocGxhJz8nZjMyNjVnYzAoMzEzYCgxMGEzKGc3ZjEoNTdhMD1kNGExMTA2MmYyPGEzJykndmxhJz8nMjMyYzYxM2coZzIwNigxMzM9KGczNTAoY2A3ZzQxZGA0PGM0MjIzNTIyJ3gpJ2dgcWR2Jz9eWCknaWR8anBxUXx1YCc%2FJ3Zsa2JpYFpscWBoJyknd2BjYHd3YHdKd2xibGsnPydtcXF1dj8qKmRiYGtxdnFkcStmamgneCUl');
+   };
+
 
     return (
         <>
@@ -255,6 +269,7 @@ export const Sidebar = ({ isResponsive}: SideBarProps) => {
                         }}
                     >{(colorMode == 'dark') ? ('Light mode') : ('Dark mode')}</Button>
                     <Button
+                        onClick={FAQ}
                         leftIcon={<FiExternalLink />}
                         justifyContent="flex-start"
                         padding={2}
@@ -315,7 +330,7 @@ export const Sidebar = ({ isResponsive}: SideBarProps) => {
                                 size="md"
                             >USD $20/mo</Heading>
                         </Stack>
-                        <Button colorScheme="green">Upgrade plan</Button>
+                        <Button onClick={handleUpgradeClick}  colorScheme="green">Upgrade plan</Button>
                         {[
                             "Available even when demand is high",
                             "Faster response speed",

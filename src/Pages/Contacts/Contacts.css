@@ -1,0 +1,68 @@
+
+.contact{
+    background-color: white;
+    height: 1000vh;
+}
+
+
+
+h1{
+    color: black;
+    font-size: 30px;
+    padding: 30px 50px;
+    padding-bottom: 10px;
+}
+
+h3{
+    color: blue;
+    padding: 10px 50px;
+    font-size: 17px;
+     
+}
+
+h5{
+    padding: 20px 50px;
+    color: black;
+    font-weight: bold;
+}
+
+
+.profile-img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: blueviolet;
+    text-align: center;
+    color: white;
+    padding-top: 5px;
+
+}
+
+.profile-text{
+    padding: 0px 10px;
+}
+
+.profile{
+    display: flex;
+      padding: 0px 50px;
+      padding-bottom: 30px;
+    
+}
+
+.email{
+    font-size: 14px;
+    color: gray;
+}
+
+hr{
+     border: 1px solid black;
+     margin-bottom: 10px;
+}
+
+.name{
+    color: black;
+}
+
+/* p{
+    color: black;
+} */

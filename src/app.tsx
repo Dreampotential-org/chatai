@@ -12,6 +12,9 @@ import VideoSection from "./PostVideo/Component/VideoSection";
 import Analytics from "./PostVideo/Component/Analytics";
 import Email from "./Email/Pages/Home/Home";
 import Settings from "./Pages/Settings/Setting";
+import AdminPanel from "./Pages/Adminpanel/Adminpanel";
+import Contacts from "./Pages/Contacts/Contacts";
+import FAQ from './ChatAi/pages/FAQ';
 
 const App = () => {
   return (
@@ -24,7 +27,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
 
             <Route path="/chatai" element={<ChatAi />} />
-
+             <Route path="/FAQ" element={<FAQ />} />
             <Route path="/postVideo" element={<PostVideo />} />
             <Route path="/postVideo/listVideo" element={<ListVideo />} />
             <Route path="/postVideo/viewVideo" element={<VeiwVideo />} />
@@ -34,7 +37,8 @@ const App = () => {
             />
             <Route path="/postVideo/analytics" element={<Analytics />} />
             <Route path="/mail" element={<Email />} />
-
+            <Route path="/admin-panel" element={<AdminPanel />} />
+              <Route path="/contacts" element={<Contacts />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </Router>

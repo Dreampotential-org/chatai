@@ -1,0 +1,42 @@
+.admin-container{
+    height: 1000vh;
+    background-color: white;
+}
+
+.data{
+    color: black;
+}
+
+h1{
+    color: green;
+}
+
+.header{
+    text-align: center;
+    
+}
+
+.heading{
+    color: green;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+
+.record{
+    /* background-color: aqua; */
+    margin: 10px;
+}
+
+.per-data{
+    margin: 10px 10px;
+    background-color: rgb(211, 205, 205);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+.bd{
+   
+    font-weight: bold;
+}

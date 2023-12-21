@@ -56,6 +56,9 @@ const Home = () => {
               <Link to="/chatai">Chat Ai</Link>
               <Link to="/postVideo">Post Video</Link>
               <Link to="/mail">Mail</Link>
+              <Link to="/admin-panel">Admin Panel</Link>
+              <Link to="/contacts">Contacts</Link>
+
             </div>
           </div>
         ) : (
