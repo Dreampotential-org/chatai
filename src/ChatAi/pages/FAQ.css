@@ -1,7 +1,9 @@
 .container{
     text-align: center;
     padding: 30px 50px !important;
-    
+    background-color: white;
+    color: black;
+    height: 1000vh !important;
 }
 
 .container h1{

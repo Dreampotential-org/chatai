@@ -52,7 +52,7 @@
     };
 
     return (
-        <div className="container">
+        <div className="container ">
             <h1 className="faq-header">Frequently Asked Question</h1>
             <div className="faq">
                 {/* first */}

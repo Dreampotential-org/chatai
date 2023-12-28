@@ -5,6 +5,19 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import "./Home.css";
 
+const handleEpadClick = () => {
+    // Use window.location to navigate to the specified URL
+    window.location.href = "https://epad.dreampotential.org/";
+  };
+
+  const handleExCalidrawClick = () => {
+    // Use window.location to navigate to the specified URL
+    window.location.href = "https://wb.dreampotential.org/";
+  };
+
+
+
+
 const Home = () => {
   const [authTrue, setAuthTrue] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +39,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="left">
+      {/* <div className="left">
         <div className="nav">
           <div className="logo">
             <img src={Logo} alt="Logo" width={250} height={100} />
@@ -36,29 +49,37 @@ const Home = () => {
           <h1>Help me debug</h1>
           <p>to my code and make it more efficient. </p>
         </div>
-      </div>
+      </div> */}
       <div className="right">
-        <div className="right__top flex__row">
+      <div className="nav">
+          <div className="logo">
+            <img src={Logo} alt="Logo" width={250} height={100} />
+            {/* <div className="right__top flex__row"> */}
+              <div className="setting-logout">
           {authTrue && (<>
             <Link to='/settings'>
               <IoSettingsOutline color="#FFF" fontSize={32}/>
             </Link>
-            <button type="button" onClick={userLogOut}>
+            <button className="logoutbtn" type="button" onClick={userLogOut}>
               <IoIosLogOut color="#FFF" fontSize={32}/>
             </button>
           </>
           )}
         </div>
+          </div>
+        </div>
+        
         {authTrue ? (
           <div className="auth-section">
             <h3>Get Started</h3>
             <div className="link-container">
-              <Link to="/chatai">Chat Ai</Link>
-              <Link to="/postVideo">Post Video</Link>
-              <Link to="/mail">Mail</Link>
-              <Link to="/admin-panel">Admin Panel</Link>
-              <Link to="/contacts">Contacts</Link>
-
+              <Link className="chatai" to="/chatai">Chat Ai</Link>
+              <Link className="postvideo" to="/postVideo">Post Video</Link>
+              <Link className="mail" to="/mail">Mail</Link>
+              <Link className="admin-panel" to="/admin-panel">Admin Panel</Link>
+              <Link className="contacts" to="/contacts">Contacts</Link>
+              <Link className="mail" to="" onClick={handleEpadClick}>Epad</Link>
+              <Link className="chatai" to="" onClick={handleExCalidrawClick}>ExCalidraw</Link>
             </div>
           </div>
         ) : (

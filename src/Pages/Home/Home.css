@@ -2,7 +2,8 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 0.6fr .4fr;
+    /* grid-template-columns: 0.6fr .4fr; */
+     /* grid-template-columns: 0.5fr .7fr; */
     overflow: hidden;
 }
 
@@ -45,6 +46,11 @@
     width: 100%;
     height: 100%;
     background-color: var(--prussian-blue);
+     /* background: url('./bycycle.png');
+     background-size: 100% 50%; 
+    background-repeat: no-repeat;
+    background-position: center bottom; */
+     
 }
 
 .right__top {
@@ -86,19 +92,45 @@
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 1.2;
+    color: #f8d486;
 }
 
 .link-container a {
-    padding: 0.6rem 1rem;
+    /* padding: 0.6rem 1rem; */
+     padding: 2rem 2rem;
     border-radius: 5px;
     font-size: 1.1rem;
-    background-color: var(--caribbean-current);
+    /* background-color: var(--caribbean-current); */
+    background-color: #ff8033;
     border: 2px solid var(--caribbean-current);
     color: var(--white) !important;
+
+}
+
+.link-container .chatai{
+    background-color: #1abc9c;
+}
+
+.link-container .postvideo{
+    background-color: #ff8033;
+}
+
+.link-container .mail{
+    background-color: #7ccb70;
+}
+
+.link-container .admin-panel{
+    background-color: #fc5e5d;
+
+}
+
+.link-container .contacts{
+    background-color: #29911d;
 }
 
 .link-container a:hover {
-    background-color: transparent;
+    /* background-color: transparent; */
+    background-color: blue;
 }
 
 .services p {
@@ -109,4 +141,20 @@
     height: 90%;
     border: 1px solid gray;
     color: gray;
+}
+
+.logo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.setting-logout{
+    display: flex;
+    justify-content: space-between;
+}
+
+.logoutbtn{
+    padding-left: 30px;
+    padding-bottom: 10px;
+    padding-right: 30px;
 }
