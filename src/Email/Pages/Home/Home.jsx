@@ -6,16 +6,35 @@ import "./Home.css";
 import Nothing from "../../Asset/Nothing.svg";
 import Elon from "../../../PostVideo/Asset/Image/ElonMush.jpg";
 
-import { MdOutlineEdit, MdAttachFile, MdLink } from "react-icons/md";
 import { CiMinimize1, CiMaximize1, CiStar } from "react-icons/ci";
 import { GoChevronRight, GoChevronDown } from "react-icons/go";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { HiInboxArrowDown } from "react-icons/hi2";
 import { FaWindowMinimize } from "react-icons/fa";
+import { IoIosLogOut } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { FaBars } from "react-icons/fa";
-
-import { getMails, sentMail } from "../../services/helper";
+import {
+  IoReturnUpForwardOutline,
+  IoReturnUpBackOutline,
+  IoMailUnreadOutline,
+} from "react-icons/io5";
+import {
+  MdAttachFile,
+  MdOutlineEdit,
+  MdDeleteOutline,
+  MdOutlineArrowBackIosNew,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
+import {
+  getMails,
+  sentMail,
+  setRead,
+  deleteMail,
+  unDeleteMail,
+} from "../../services/helper";
 import { useToast } from "@chakra-ui/react";
+import { Sidebar } from "@/ChatAi/components/Sidebar";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -29,7 +48,10 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [sentModalMin, setSentModalMin] = useState(false);
   const [sideBar, setSideBar] = useState(true);
+  const [midBar, setMidBar] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
   const [attachments, setAttachments] = useState([]);
+  const [showMaillists, setShowMaillists] = useState(false);
   const toast = useToast();
   // const toastIdRef = React.useRef();
 
@@ -68,9 +90,33 @@ const Home = () => {
       Notes: toggle === "Notes" && true,
     }));
     setTogglefolder(toggle);
-    // setMails(null);
-    if (toggle === "Inbox") {
-      fetch(getMails);
+    fetchMails(getMails);
+    if (window.innerWidth < 1050) {
+      setSideBar(false);
+    }
+    // if (window.innerWidth < 650) {
+    //   if (sideBar) {
+    //     setSideBar(false);
+    //   }
+    // }
+  };
+
+  const fetchMails = async (method) => {
+    const response = await fetchRequest(method, {}, "", "");
+    if (response.status === 200) {
+      const email = response.data.map((data) => data);
+      const filteredEmails = filterEmails(email);
+      setMails(filteredEmails);
+    }
+  };
+
+  const filterEmails = (emails) => {
+    if (toggleSection.Deleted) {
+      return emails.filter((mail) => mail.deleted === true);
+    } else if (toggleSection.Inbox) {
+      return emails.filter((mail) => mail.deleted === false);
+    } else {
+      return null;
     }
   };
 
@@ -83,27 +129,6 @@ const Home = () => {
       overlay.classList.toggle("overlayMin");
       overlay.classList.remove("overlayMax");
       setSentModalMin(!sentModalMin);
-    }
-  };
-
-  const fetch = async (method) => {
-    try {
-      const response = await method();
-      if (response.status === 200) {
-        const email = response.data.map((data) => data);
-        setMails(email);
-      } else {
-        toast({
-          title: "Please reload the page some error occurs",
-          status: "error",
-          isClosable: true,
-        });
-        throw new Error("Invalid method");
-      }
-    } catch (error) {
-      if (error.response) {
-        throw error.response.data;
-      }
     }
   };
 
@@ -139,34 +164,118 @@ const Home = () => {
     setValuesregi({ tosent: "", subject: "", discription: "" });
     setAttachments([]);
 
-    try {
-      const response = await sentMail(body);
-      if (response.status === 200) {
-        toast({
-          title: "Email sent successfully",
-          status: "success",
-          isClosable: true,
-        });
-        console.log(response);
-        return response;
-      } else {
-        toast({
-          title: "Email not sent some error occured, please try again!",
-          status: "success",
-          isClosable: true,
-        });
-        throw new Error("Failed to upload video");
+    fetchRequest(
+      sentMail,
+      body,
+      "Email sent successfully",
+      "Email not sent some error occured, please try again!"
+    );
+  };
+
+  const updateMailState = async (prop) => {
+    setMailsDetails(prop);
+    if (!mailsDetails.read) {
+      fetchRequest(setRead, { id: prop.id }, "", "");
+      fetchMails(getMails);
+    }
+  };
+
+  const mailMenu = async (prop) => {
+    setShowMenu(!showMenu);
+    if (prop === "delete") {
+      const response = await fetchRequest(
+        deleteMail,
+        { id: mailsDetails.id },
+        "Email is deleted successfully",
+        "Some error occured. Please try again!"
+      );
+    } else if (prop === "Undelete") {
+      const response = await fetchRequest(
+        unDeleteMail,
+        { id: mailsDetails.id },
+        "Email is deleted successfully",
+        "Some error occured. Please try again!"
+      );
+    } else if (prop === "UnRead") {
+      const response = await fetchRequest(
+        unDeleteMail,
+        { id: mailsDetails.id },
+        "Email is deleted successfully",
+        "Some error occured. Please try again!"
+      );
+    } else {
+      return;
+    }
+    setShowMenu(false);
+    setMailsDetails(null);
+    fetchMails(getMails);
+  };
+
+  const fetchRequest = async (method, payload, successMsg, errorMsg) => {
+    let defaultError = "Some Error Occured, PLease reload the page";
+    let defaultSuccess = "Successfull";
+
+    if (typeof method === "function" && typeof payload === "object") {
+      try {
+        const response = await method(payload === null ? {} : payload);
+        if (response.status === 200) {
+          toast({
+            title: successMsg !== "" ? successMsg : defaultSuccess,
+            status: "success",
+            duration: 1000,
+          });
+          return response;
+        } else {
+          toast({
+            title: errorMsg !== "" ? errorMsg : defaultError,
+            status: "error",
+            duration: 2000,
+          });
+
+          throw new Error("Invalid method");
+        }
+      } catch (error) {
+        if (error.response) {
+          toast({
+            title: defaultError,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+          throw error.response.data;
+        }
       }
-    } catch (error) {
-      if (error.response) {
-        throw error.response.data;
-      }
+    } else {
+      toast({
+        title: "Please provide correct props",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
   useEffect(() => {
-    fetch(getMails);
+    fetchMails(getMails);
     return () => {};
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1050) {
+        setSideBar(false);
+      }
+      if (window.innerWidth >= 650) {
+        setMidBar(true);
+      }
+      if (window.innerWidth >= 1050) {
+        setSideBar(true);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -174,19 +283,24 @@ const Home = () => {
       <div className="navbar">
         <div className="nav-links" style={{ alignItems: "center" }}>
           <FaBars fontSize={24} onClick={() => setSideBar(!sideBar)} />
-          <img src={Logo} alt="Logo" width={180} height={40} />
-          <Link to="/postVideo/analytics">Home</Link>
-          <Link to="/chatai">View</Link>
-          <Link to="/postVideo/viewVideo">Help</Link>
-          <button type="button" className="post-btn" onClick={userLogOut}>
-            Log Out
-          </button>
+          <Link to="/" className="nav-logo">
+            <img src={Logo} alt="Logo" />
+          </Link>
+          <Link to="/chatai">ChatAi</Link>
+          <Link to="/postVideo">Post Video</Link>
+        </div>
+        <div>
+          <IoIosLogOut color="#FFF" fontSize={30} />
         </div>
       </div>
-      <div className="mail__content flex__row flex__start">
+      <div className="mail__content">
         {/* // ----------------- Mails Forlder -------------------------- // */}
         {sideBar && (
-          <div className="mail__sidebar">
+          <div
+            className={`mail__sidebar mail__sidebar_overlay LeftBar ${
+              sideBar ? "slide-right" : ""
+            }`}
+          >
             <div className="new_mail flex__row flex__start">
               <button
                 className="flex__row flex__center"
@@ -303,39 +417,64 @@ const Home = () => {
           </div>
         )}
         {/* // ----------------- Mail In Folder -------------------------- // */}
-        <div className="mail__midbar">
-          {toggleSection.Groups === false && (
-            <div className="mail__header flex__row flex__start">
-              <p>{togglefolder}</p>
-              <CiStar color="#000" fontSize={24} />
-            </div>
-          )}
-          {mails !== null ? (
-            <div className="mail__list flex__col">
-              <ul className="flex__col flex__start">
-                {mails.map((mail) => (
-                  <li
-                    className="__mail flex__row flex__center"
-                    onClick={() => setMailsDetails(mail)}
-                    key={mail.id}
-                  >
-                    <img src={Elon} alt="user" />
-                    <div className="mail__user flex__col flex__start">
-                      <p>{mail.mail_from}</p>
-                      <p>{mail.subject}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
+
+        <div className="mailMidbar_btn">
+          {midBar ? (
+            <MdOutlineArrowBackIosNew
+              fontSize={24}
+              onClick={() => setMidBar(!midBar)}
+            />
           ) : (
-            <div className="nothing flex__col flex__center">
-              <img src={Nothing} alt="Empty" />
-              <p>Nothing in Folder</p>
-              <span>Enjoy your day</span>
-            </div>
+            <MdOutlineArrowForwardIos
+              fontSize={24}
+              onClick={() => setMidBar(!midBar)}
+            />
           )}
         </div>
+        {midBar && (
+          <div
+            className={`mail__midbar mail__midbar_overlay ${
+              midBar ? "slide-right" : ""
+            }`}
+          >
+            {toggleSection.Groups === false && (
+              <div className="mail__header flex__row flex__start">
+                <p>{togglefolder}</p>
+                <CiStar color="#000" fontSize={24} />
+              </div>
+            )}
+            {mails.length !== 0 ? (
+              <div className="mail__list flex__col">
+                <ul className="flex__col flex__start">
+                  {mails.map((mail) => (
+                    <li
+                      style={{
+                        backgroundColor:
+                          mail.read && "var(--chakra-colors-gray-400)",
+                      }}
+                      className="__mail flex__row flex__center"
+                      onClick={() => updateMailState(mail)}
+                      key={mail.id}
+                      id={mail.id}
+                    >
+                      <img src={Elon} alt="user" />
+                      <div className="mail__user flex__col flex__start">
+                        <p>{mail.mail_from}</p>
+                        <p>{mail.subject}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div className="nothing flex__col flex__center">
+                <img src={Nothing} alt="Empty" />
+                <p>Nothing in Folder</p>
+                <span>Enjoy your day</span>
+              </div>
+            )}
+          </div>
+        )}
         {/* // ----------------- Mail Detrails -------------------------- // */}
         <div className="mail__details flex__col flex__start">
           {mailsDetails !== null && (
@@ -345,7 +484,7 @@ const Home = () => {
               </div>
               <div className="mail__description">
                 <div className="send__info flex__row flex__start">
-                  <div className="sender_img">
+                  <div className="sender_img flex__row flex__center">
                     <img src={Elon} alt="user" />
                   </div>
                   <div className="sender__det flex__row">
@@ -355,10 +494,63 @@ const Home = () => {
                         to me
                       </p>
                     </div>
-                    <div className="flex__row flex__start">
+                    <div className="sender__det_menu flex__row flex__start">
                       <p>{mailsDetails.local_date.slice(20, 26)}</p>
                       <CiStar color="#000" fontSize={24} />
-                      <BsThreeDotsVertical color="#000" fontSize={24} />
+                      <BsThreeDotsVertical
+                        color="#000"
+                        fontSize={24}
+                        onClick={() => mailMenu("show")}
+                      />
+                      {showMenu && (
+                        <ul className="sender__menu_modal">
+                          {toggleSection.Deleted ? (
+                            <li
+                              className="menu_modal_li flex__row"
+                              id="delete"
+                              onClick={() => mailMenu("Undelete")}
+                            >
+                              <HiInboxArrowDown fontSize={24} />
+                              <label htmlFor="delete">Move to Inbox</label>
+                            </li>
+                          ) : (
+                            <li
+                              className="menu_modal_li flex__row"
+                              id="delete"
+                              onClick={() => mailMenu("delete")}
+                            >
+                              <MdDeleteOutline fontSize={24} />
+                              <label htmlFor="delete">
+                                Delete this Messege
+                              </label>
+                            </li>
+                          )}
+                          <li
+                            className="menu_modal_li flex__row"
+                            id="delete"
+                            onClick={() => mailMenu("forward")}
+                          >
+                            <IoReturnUpForwardOutline fontSize={24} />
+                            <label htmlFor="delete">Forward this Messege</label>
+                          </li>
+                          <li
+                            className="menu_modal_li flex__row"
+                            id="delete"
+                            onClick={() => mailMenu("reply")}
+                          >
+                            <IoReturnUpBackOutline fontSize={24} />
+                            <label htmlFor="delete">Reply this Messege</label>
+                          </li>
+                          <li
+                            className="menu_modal_li flex__row"
+                            id="delete"
+                            onClick={() => mailMenu("UnRead")}
+                          >
+                            <IoMailUnreadOutline fontSize={24} />
+                            <label htmlFor="delete">Mark as unread</label>
+                          </li>
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
