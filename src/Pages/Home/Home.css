@@ -13,7 +13,7 @@
 }
 
 .left .nav {
-    display: flex;
+    /* display: flex; */
     align-items: center;
     justify-content: space-between;
 }
@@ -42,16 +42,19 @@
 }
 
 .right {
-    padding: 2rem;
+    /* padding: 2rem; */
+    padding-top: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--prussian-blue);
-     /* background: url('./bycycle.png');
+    /* background-color: var(--prussian-blue); */
+     background: url('./bycycle.png');
      background-size: 100% 50%; 
     background-repeat: no-repeat;
-    background-position: center bottom; */
+    background-position: center bottom;
      
 }
+
+
 
 .right__top {
     width: 100%;
@@ -109,6 +112,7 @@
 
 .link-container .chatai{
     background-color: #1abc9c;
+    /* color: black !important; */
 }
 
 .link-container .postvideo{
@@ -146,6 +150,8 @@
 .logo{
     display: flex;
     justify-content: space-between;
+    /* background-color: rgb(111, 111, 168); */
+    padding: 10px;
 }
 
 .setting-logout{
@@ -157,4 +163,29 @@
     padding-left: 30px;
     padding-bottom: 10px;
     padding-right: 30px;
+}
+
+.logo{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* .logo-img{
+    margin-right: 1000px;
+
+    background-color: red;
+}
+
+.nav{
+    background-color: white !important;
+} */
+
+/* .navbar{
+    background-color: rgb(66, 127, 151);
+   
+} */
+
+.front{
+     background-color: rgb(66, 127, 151);
+    padding: 5px 10px !important;
 }

@@ -15,6 +15,8 @@ import Settings from "./Pages/Settings/Setting";
 import AdminPanel from "./Pages/Adminpanel/Adminpanel";
 import Contacts from "./Pages/Contacts/Contacts";
 import FAQ from './ChatAi/pages/FAQ';
+import TeacherUI from "./Pages/TeacherUI/TeacherUI";
+
 
 const App = () => {
   return (
@@ -39,6 +41,7 @@ const App = () => {
             <Route path="/mail" element={<Email />} />
             <Route path="/admin-panel" element={<AdminPanel />} />
               <Route path="/contacts" element={<Contacts />} />
+              <Route path="/teacher-ui" element={<TeacherUI />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </Router>

@@ -3,7 +3,7 @@ import Logo from "../../PostVideo/Asset/SVG/dreampotential_Logo-01.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
-import "./Home.css";
+import "./home.css";
 
 const handleEpadClick = () => {
     // Use window.location to navigate to the specified URL
@@ -51,9 +51,11 @@ const Home = () => {
         </div>
       </div> */}
       <div className="right">
-      <div className="nav">
-          <div className="logo">
+      <div className="navbar front">
+          {/* <div className=""> */}
+          <div className="">
             <img src={Logo} alt="Logo" width={250} height={100} />
+            </div>
             {/* <div className="right__top flex__row"> */}
               <div className="setting-logout">
           {authTrue && (<>
@@ -66,7 +68,7 @@ const Home = () => {
           </>
           )}
         </div>
-          </div>
+          {/* </div> */}
         </div>
         
         {authTrue ? (
@@ -77,7 +79,9 @@ const Home = () => {
               <Link className="postvideo" to="/postVideo">Post Video</Link>
               <Link className="mail" to="/mail">Mail</Link>
               <Link className="admin-panel" to="/admin-panel">Admin Panel</Link>
-              <Link className="contacts" to="/contacts">Contacts</Link>
+               <Link className="postvideo" to="/contacts">Contacts</Link>
+               <Link className="chatai" to="/teacher-ui">Teacher-UI</Link>
+              {/* <Link className="contacts" to="/contacts">Contacts</Link> */}
               <Link className="mail" to="" onClick={handleEpadClick}>Epad</Link>
               <Link className="chatai" to="" onClick={handleExCalidrawClick}>ExCalidraw</Link>
             </div>
