@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "./Store/store";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Providers } from "./ChatAi/components/Providers";
 import ReactDOM from "react-dom/client";
@@ -14,9 +17,10 @@ import Email from "./Email/Pages/Home/Home";
 import Settings from "./Pages/Settings/Setting";
 import AdminPanel from "./Pages/Adminpanel/Adminpanel";
 import Contacts from "./Pages/Contacts/Contacts";
-import FAQ from './ChatAi/pages/FAQ';
+import FAQ from "./ChatAi/pages/FAQ";
 import TeacherUI from "./Pages/TeacherUI/TeacherUI";
-
+import VideoNarrator from "./PostVideo/Component/VideoNarrator";
+import Fitness from "./Pages/Fitness/Fitness";
 
 const App = () => {
   return (
@@ -29,8 +33,9 @@ const App = () => {
             <Route path="/login" element={<Login />} />
 
             <Route path="/chatai" element={<ChatAi />} />
-             <Route path="/FAQ" element={<FAQ />} />
+            <Route path="/FAQ" element={<FAQ />} />
             <Route path="/postVideo" element={<PostVideo />} />
+            <Route path="/postVideo/narrator" element={<VideoNarrator />} />
             <Route path="/postVideo/listVideo" element={<ListVideo />} />
             <Route path="/postVideo/viewVideo" element={<VeiwVideo />} />
             <Route
@@ -40,9 +45,11 @@ const App = () => {
             <Route path="/postVideo/analytics" element={<Analytics />} />
             <Route path="/mail" element={<Email />} />
             <Route path="/admin-panel" element={<AdminPanel />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/teacher-ui" element={<TeacherUI />} />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/teacher-ui" element={<TeacherUI />} />
             <Route path="/settings" element={<Settings />} />
+
+            <Route path="/fit" element={<Fitness />} />
           </Routes>
         </Router>
       </Providers>
@@ -55,6 +62,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );

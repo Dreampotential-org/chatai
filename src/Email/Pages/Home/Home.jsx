@@ -32,9 +32,9 @@ import {
   setRead,
   deleteMail,
   unDeleteMail,
+  getSentMails,
 } from "../../services/helper";
 import { useToast } from "@chakra-ui/react";
-import { Sidebar } from "@/ChatAi/components/Sidebar";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -53,12 +53,11 @@ const Home = () => {
   const [attachments, setAttachments] = useState([]);
   const [showMaillists, setShowMaillists] = useState(false);
   const toast = useToast();
-  // const toastIdRef = React.useRef();
 
   const [toggleSection, setToggleSection] = useState({
     Groups: false,
     Inbox: true,
-    JunkEmail: false,
+    Spam: false,
     Drafts: false,
     Send: false,
     Deleted: false,
@@ -74,7 +73,7 @@ const Home = () => {
   });
 
   const userLogOut = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("Token");
     navigate("/login");
   };
 
@@ -82,31 +81,49 @@ const Home = () => {
     setToggleSection(() => ({
       Groups: toggle === "Groups" && true,
       Inbox: toggle === "Inbox" && true,
-      JunkEmail: toggle === "JunkEmail" && true,
+      Spam: toggle === "Spam" && true,
       Drafts: toggle === "Drafts" && true,
       Send: toggle === "Send" && true,
       Deleted: toggle === "Deleted" && true,
       Archive: toggle === "Archive" && true,
       Notes: toggle === "Notes" && true,
     }));
-    setTogglefolder(toggle);
-    fetchMails(getMails);
+
+    setMails([]);
+    console.log(mails);
+
+    if (
+      toggleSection.Groups ||
+      toggleSection.Spam ||
+      toggleSection.Drafts ||
+      toggleSection.Archive ||
+      toggleSection.Notes
+    ) {
+      console.log(toggle);
+      setTogglefolder(toggle);
+    } else if (toggleSection.Send) {
+      setTogglefolder(toggle);
+      fetchMails(getSentMails);
+    } else {
+      setTogglefolder(toggle);
+      fetchMails(getMails);
+    }
+    console.log(mails);
     if (window.innerWidth < 1050) {
       setSideBar(false);
     }
-    // if (window.innerWidth < 650) {
-    //   if (sideBar) {
-    //     setSideBar(false);
-    //   }
-    // }
   };
 
   const fetchMails = async (method) => {
     const response = await fetchRequest(method, {}, "", "");
     if (response.status === 200) {
       const email = response.data.map((data) => data);
-      const filteredEmails = filterEmails(email);
-      setMails(filteredEmails);
+      if (toggleSection.Inbox || toggleSection.Deleted) {
+        const filteredEmails = filterEmails(email);
+        setMails(filteredEmails);
+      } else {
+        setMails(email);
+      }
     }
   };
 
@@ -157,7 +174,6 @@ const Home = () => {
       reply_to: valuesregi.tosent,
       mail_to: valuesregi.tosent,
       subject: valuesregi.subject,
-      // message_text: { msg: valuesregi.discription, attachment: attachments },
       message_text: valuesregi.discription,
     };
     setShowModal(false);
@@ -174,7 +190,10 @@ const Home = () => {
 
   const updateMailState = async (prop) => {
     setMailsDetails(prop);
-    if (!mailsDetails.read) {
+    if (!mailsDetails.read && toggleSection.Send === true) {
+      fetchRequest(setRead, { id: prop.id }, "", "");
+      fetchMails(getSentMails);
+    } else if (!mailsDetails.read) {
       fetchRequest(setRead, { id: prop.id }, "", "");
       fetchMails(getMails);
     }
@@ -290,7 +309,7 @@ const Home = () => {
           <Link to="/postVideo">Post Video</Link>
         </div>
         <div>
-          <IoIosLogOut color="#FFF" fontSize={30} />
+          <IoIosLogOut color="#FFF" fontSize={30} onClick={userLogOut} />
         </div>
       </div>
       <div className="mail__content">
@@ -356,9 +375,9 @@ const Home = () => {
                 </li>
                 <li
                   className="flex__row flex__start"
-                  onClick={() => handleToggleSection("JunkEmail")}
+                  onClick={() => handleToggleSection("Spam")}
                 >
-                  <span>Junk Email</span>
+                  <span>Spam</span>
                 </li>
                 <li
                   className="flex__row flex__start"
@@ -418,147 +437,24 @@ const Home = () => {
         )}
         {/* // ----------------- Mail In Folder -------------------------- // */}
 
-        <div className="mailMidbar_btn">
-          {midBar ? (
-            <MdOutlineArrowBackIosNew
-              fontSize={24}
-              onClick={() => setMidBar(!midBar)}
-            />
-          ) : (
-            <MdOutlineArrowForwardIos
-              fontSize={24}
-              onClick={() => setMidBar(!midBar)}
-            />
-          )}
-        </div>
-        {midBar && (
-          <div
-            className={`mail__midbar mail__midbar_overlay ${
-              midBar ? "slide-right" : ""
-            }`}
-          >
-            {toggleSection.Groups === false && (
-              <div className="mail__header flex__row flex__start">
-                <p>{togglefolder}</p>
-                <CiStar color="#000" fontSize={24} />
-              </div>
-            )}
-            {mails.length !== 0 ? (
-              <div className="mail__list flex__col">
-                <ul className="flex__col flex__start">
-                  {mails.map((mail) => (
-                    <li
-                      style={{
-                        backgroundColor:
-                          mail.read && "var(--chakra-colors-gray-400)",
-                      }}
-                      className="__mail flex__row flex__center"
-                      onClick={() => updateMailState(mail)}
-                      key={mail.id}
-                      id={mail.id}
-                    >
-                      <img src={Elon} alt="user" />
-                      <div className="mail__user flex__col flex__start">
-                        <p>{mail.mail_from}</p>
-                        <p>{mail.subject}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              <div className="nothing flex__col flex__center">
-                <img src={Nothing} alt="Empty" />
-                <p>Nothing in Folder</p>
-                <span>Enjoy your day</span>
-              </div>
-            )}
-          </div>
-        )}
-        {/* // ----------------- Mail Detrails -------------------------- // */}
+        <MailLists
+          mails={mails}
+          midBar={midBar}
+          setMidBar={setMidBar}
+          togglefolder={togglefolder}
+          toggleSection={toggleSection}
+          updateMailState={updateMailState}
+        />
+
+        {/* // ----------------- Mail Details -------------------------- // */}
         <div className="mail__details flex__col flex__start">
           {mailsDetails !== null && (
-            <>
-              <div className="mail__subject flex__row flex__start">
-                <p>{mailsDetails.subject}</p>
-              </div>
-              <div className="mail__description">
-                <div className="send__info flex__row flex__start">
-                  <div className="sender_img flex__row flex__center">
-                    <img src={Elon} alt="user" />
-                  </div>
-                  <div className="sender__det flex__row">
-                    <div className="flex__col flex__start" style={{ gap: 0 }}>
-                      <p>{mailsDetails.mail_from}</p>
-                      <p style={{ color: "var(--chakra-colors-gray-700)" }}>
-                        to me
-                      </p>
-                    </div>
-                    <div className="sender__det_menu flex__row flex__start">
-                      <p>{mailsDetails.local_date.slice(20, 26)}</p>
-                      <CiStar color="#000" fontSize={24} />
-                      <BsThreeDotsVertical
-                        color="#000"
-                        fontSize={24}
-                        onClick={() => mailMenu("show")}
-                      />
-                      {showMenu && (
-                        <ul className="sender__menu_modal">
-                          {toggleSection.Deleted ? (
-                            <li
-                              className="menu_modal_li flex__row"
-                              id="delete"
-                              onClick={() => mailMenu("Undelete")}
-                            >
-                              <HiInboxArrowDown fontSize={24} />
-                              <label htmlFor="delete">Move to Inbox</label>
-                            </li>
-                          ) : (
-                            <li
-                              className="menu_modal_li flex__row"
-                              id="delete"
-                              onClick={() => mailMenu("delete")}
-                            >
-                              <MdDeleteOutline fontSize={24} />
-                              <label htmlFor="delete">
-                                Delete this Messege
-                              </label>
-                            </li>
-                          )}
-                          <li
-                            className="menu_modal_li flex__row"
-                            id="delete"
-                            onClick={() => mailMenu("forward")}
-                          >
-                            <IoReturnUpForwardOutline fontSize={24} />
-                            <label htmlFor="delete">Forward this Messege</label>
-                          </li>
-                          <li
-                            className="menu_modal_li flex__row"
-                            id="delete"
-                            onClick={() => mailMenu("reply")}
-                          >
-                            <IoReturnUpBackOutline fontSize={24} />
-                            <label htmlFor="delete">Reply this Messege</label>
-                          </li>
-                          <li
-                            className="menu_modal_li flex__row"
-                            id="delete"
-                            onClick={() => mailMenu("UnRead")}
-                          >
-                            <IoMailUnreadOutline fontSize={24} />
-                            <label htmlFor="delete">Mark as unread</label>
-                          </li>
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="send__info_det">
-                  <p>{mailsDetails.message}</p>
-                </div>
-              </div>
-            </>
+            <MailDetails
+              mailsDetails={mailsDetails}
+              mailMenu={mailMenu}
+              showMenu={showMenu}
+              toggleSection={toggleSection}
+            />
           )}
         </div>
       </div>
@@ -650,3 +546,160 @@ const Home = () => {
 };
 
 export default Home;
+
+const MailDetails = ({ mailsDetails, mailMenu, showMenu, toggleSection }) => {
+  return (
+    <>
+      <div className="mail__subject flex__row flex__start">
+        <p>{mailsDetails.subject}</p>
+      </div>
+      <div className="mail__description">
+        <div className="send__info flex__row flex__start">
+          <div className="sender_img flex__row flex__center">
+            <img src={Elon} alt="user" />
+          </div>
+          <div className="sender__det flex__row">
+            <div className="flex__col flex__start" style={{ gap: 0 }}>
+              <p>{mailsDetails.mail_from}</p>
+              <p style={{ color: "var(--chakra-colors-gray-700)" }}>
+                {toggleSection.Send === true
+                  ? `${mailsDetails.mail_to}`
+                  : "to me"}
+              </p>
+            </div>
+            <div className="sender__det_menu flex__row flex__start">
+              <p>{mailsDetails.local_date.slice(20, 26)}</p>
+              <CiStar color="#000" fontSize={24} />
+              <BsThreeDotsVertical
+                color="#000"
+                fontSize={24}
+                onClick={() => mailMenu("show")}
+              />
+              {showMenu && (
+                <ul className="sender__menu_modal">
+                  {toggleSection.Deleted ? (
+                    <li
+                      className="menu_modal_li flex__row"
+                      id="delete"
+                      onClick={() => mailMenu("Undelete")}
+                    >
+                      <HiInboxArrowDown fontSize={24} />
+                      <label htmlFor="delete">Move to Inbox</label>
+                    </li>
+                  ) : (
+                    <li
+                      className="menu_modal_li flex__row"
+                      id="delete"
+                      onClick={() => mailMenu("delete")}
+                    >
+                      <MdDeleteOutline fontSize={24} />
+                      <label htmlFor="delete">Delete this Messege</label>
+                    </li>
+                  )}
+                  <li
+                    className="menu_modal_li flex__row"
+                    id="delete"
+                    onClick={() => mailMenu("forward")}
+                  >
+                    <IoReturnUpForwardOutline fontSize={24} />
+                    <label htmlFor="delete">Forward this Messege</label>
+                  </li>
+                  <li
+                    className="menu_modal_li flex__row"
+                    id="delete"
+                    onClick={() => mailMenu("reply")}
+                  >
+                    <IoReturnUpBackOutline fontSize={24} />
+                    <label htmlFor="delete">Reply this Messege</label>
+                  </li>
+                  <li
+                    className="menu_modal_li flex__row"
+                    id="delete"
+                    onClick={() => mailMenu("UnRead")}
+                  >
+                    <IoMailUnreadOutline fontSize={24} />
+                    <label htmlFor="delete">Mark as unread</label>
+                  </li>
+                </ul>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="send__info_det">
+          <p>{mailsDetails.message}</p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const MailLists = ({
+  mails,
+  midBar,
+  setMidBar,
+  togglefolder,
+  toggleSection,
+  updateMailState,
+}) => {
+  return (
+    <>
+      <div className="mailMidbar_btn">
+        {midBar ? (
+          <MdOutlineArrowBackIosNew
+            fontSize={24}
+            onClick={() => setMidBar(!midBar)}
+          />
+        ) : (
+          <MdOutlineArrowForwardIos
+            fontSize={24}
+            onClick={() => setMidBar(!midBar)}
+          />
+        )}
+      </div>
+      {midBar && (
+        <div
+          className={`mail__midbar mail__midbar_overlay ${
+            midBar ? "slide-right" : ""
+          }`}
+        >
+          {toggleSection.Groups === false && (
+            <div className="mail__header flex__row flex__start">
+              <p>{togglefolder}</p>
+              <CiStar color="#000" fontSize={24} />
+            </div>
+          )}
+          {mails.length !== 0 ? (
+            <div className="mail__list flex__col">
+              <ul className="flex__col flex__start">
+                {mails.map((mail) => (
+                  <li
+                    style={{
+                      backgroundColor:
+                        mail.read && "var(--chakra-colors-gray-400)",
+                    }}
+                    className="__mail flex__row flex__center"
+                    onClick={() => updateMailState(mail)}
+                    key={mail.id}
+                    id={mail.id}
+                  >
+                    <img src={Elon} alt="user" />
+                    <div className="mail__user flex__col flex__start">
+                      <p>{mail.mail_from}</p>
+                      <p>{mail.subject}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <div className="nothing flex__col flex__center">
+              <img src={Nothing} alt="Empty" />
+              <p>Nothing in Folder</p>
+              <span>Enjoy your day</span>
+            </div>
+          )}
+        </div>
+      )}
+    </>
+  );
+};

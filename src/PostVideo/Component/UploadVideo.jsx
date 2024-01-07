@@ -3,7 +3,6 @@ import axiosInstance from "../../ChatAi/services/axios";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../Asset/CSS/UploadVideo.css";
-import { progress } from "framer-motion";
 
 const UploadVideo = () => {
   const [recordedStreamFile, setRecordedStreamFile] = useState(null);
@@ -18,8 +17,10 @@ const UploadVideo = () => {
 
   const handleUpload = async (event) => {
     const videoElement = document.getElementById("show-video");
-    const fileInput = event.target;
+    // const fileInput = event.target;
+    const fileInput = Array.from(event.target.files);
     const token = localStorage.getItem("Token");
+    console.log(fileInput);
     // const token = JSON.parse(localStorage.getItem("Token"));
     swal({
       title: "0%",
@@ -44,6 +45,7 @@ const UploadVideo = () => {
           const formData = new FormData();
           formData.append("file", Globarfile, Globarfile.name);
           formData.append("source", window.location.host);
+          console.log(formData);
 
           const response = axios
             .post(`${SERVER}storage/file-upload/`, formData, {
@@ -103,25 +105,31 @@ const UploadVideo = () => {
   };
 
   return (
-    <div>
-      <video
-        id="show-video"
-        width="500"
-        height="350"
-        controls
-        style={{ display: `${recordedStreamFile === null ? "none" : "flex"}` }}
-      />
-      <input
-        type="file"
-        id="uploadVideo"
-        accept="video/*"
-        style={{ display: "none" }}
-        onChange={handleUpload}
-      />
-      <label htmlFor="uploadVideo" className="post-btn">
-        Upload File
-      </label>
-    </div>
+    <>
+      <div>
+        <video
+          id="show-video"
+          width="500"
+          height="350"
+          controls
+          style={{
+            display: `${recordedStreamFile === null ? "none" : "flex"}`,
+          }}
+        />
+        <input
+          type="file"
+          id="uploadVideo"
+          // accept="video/*"
+          style={{ display: "none" }}
+          onChange={handleUpload}
+          name="files[]"
+          multiple
+        />
+        <label htmlFor="uploadVideo" className="post-btn">
+          Upload File
+        </label>
+      </div>
+    </>
   );
 };
 

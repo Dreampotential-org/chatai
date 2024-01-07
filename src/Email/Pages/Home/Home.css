@@ -11,6 +11,9 @@ textarea:focus {
     position: relative;
 }
 
+.mail__container .navbar {
+    background: var(--secondry-accent)
+}
 
 .mail__container .nav-links>svg {
     display: none;

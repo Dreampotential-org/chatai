@@ -8,7 +8,7 @@ const Sidebar = ({ handleToggleSection, menuItem }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState("Dashboard");
   const toggle = () => setIsOpen(!isOpen);
-  const iconFont = 22;
+  const iconFont = 24;
 
   const handleSection = (section) => {
     handleToggleSection(section);

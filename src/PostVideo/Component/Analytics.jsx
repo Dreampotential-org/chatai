@@ -42,35 +42,35 @@ const Analytics = () => {
   const menuItem = [
     {
       name: "Dashboard",
-      icon: <MdDashboard fontSize={iconFont} />,
+      icon: <MdDashboard fontSize={iconFont + 4} />,
     },
     {
       name: "Content",
-      icon: <BsCollectionPlayFill fontSize={iconFont} />,
+      icon: <BsCollectionPlayFill fontSize={iconFont + 4} />,
     },
     {
       name: "Analytics",
-      icon: <MdAnalytics fontSize={iconFont} />,
+      icon: <MdAnalytics fontSize={iconFont + 4} />,
     },
     {
       name: "Comments",
-      icon: <MdOutlineInsertComment fontSize={iconFont} />,
+      icon: <MdOutlineInsertComment fontSize={iconFont + 4} />,
     },
     {
       name: "Subtitle",
-      icon: <MdOutlineSubtitles fontSize={iconFont} />,
+      icon: <MdOutlineSubtitles fontSize={iconFont + 4} />,
     },
     {
       name: "Earn",
-      icon: <MdOutlineAttachMoney fontSize={iconFont} />,
+      icon: <MdOutlineAttachMoney fontSize={iconFont + 4} />,
     },
     {
       name: "Customization",
-      icon: <FaMagic fontSize={iconFont} />,
+      icon: <FaMagic fontSize={iconFont + 4} />,
     },
     {
       name: "Audio library",
-      icon: <BsFileMusic fontSize={iconFont} />,
+      icon: <BsFileMusic fontSize={iconFont + 4} />,
     },
   ];
 
@@ -116,7 +116,7 @@ const Dashboard = ({ iconFont }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   return (
-    <div className="container">
+    <div className="analytics_container">
       <div className="title">
         <h1>Channel Dashboard</h1>
       </div>
@@ -240,7 +240,7 @@ const Content = ({ iconFont }) => {
   }, []);
 
   return (
-    <div className="container" style={{ padding: "1rem 0" }}>
+    <div className="analytics_container" style={{ padding: "1rem 0" }}>
       <div className="title" style={{ padding: "1rem 2rem" }}>
         <h1>Channel dashboard</h1>
       </div>
@@ -344,7 +344,7 @@ const Graphs = () => {
   };
 
   return (
-    <div className="container" style={{ padding: "1rem 0" }}>
+    <div className="analytics_container" style={{ padding: "1rem 0" }}>
       <div className="title" style={{ padding: "1rem 2rem" }}>
         <h1>Channel dashboard</h1>
       </div>

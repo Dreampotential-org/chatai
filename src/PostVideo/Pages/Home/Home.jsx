@@ -7,6 +7,7 @@ import {
 } from "../../Component/index";
 import "./home.css";
 import Navbar from "../../Component/Navbar";
+import Upload from "@/PostVideo/Component/Upload";
 
 const Home = () => {
   const [screenRecord, setScreenRecord] = useState(false);
@@ -104,11 +105,12 @@ const Home = () => {
           </div>
           <div>
             <div className="upload-section">
-              <UploadVideo />
+              <Upload />
             </div>
           </div>
         </div>
       </div>
+      {/* <Upload /> */}
     </>
   );
 };

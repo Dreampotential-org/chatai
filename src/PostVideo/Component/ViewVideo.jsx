@@ -11,7 +11,7 @@ const ViewVideo = () => {
     const fetchData = async () => {
       try {
         const res = await listVideo();
-        setVideos(res.data);
+        setVideos(res.data.results);
         console.log(res);
       } catch (error) {
         console.error("Error fetching videos:", error);

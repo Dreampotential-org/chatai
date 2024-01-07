@@ -1,79 +1,66 @@
-
-.contact{
-    background-color: white;
-    /* height: 1000vh; */
-    display: flex;
-    
-}
-
-
-
-h1{
-    color: black;
-    font-size: 30px;
-    padding: 30px 50px;
-    padding-bottom: 10px;
-}
-
-h3{
-    color: blue;
-    padding: 10px 50px;
-    font-size: 17px;
-     
-}
-
-h5{
-    padding: 20px 50px;
-    color: black;
-    font-weight: bold;
-}
-
-
-.profile-img{
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    background-color: blueviolet;
-    text-align: center;
-    color: white;
-    padding-top: 5px;
+.contact {
+  background-color: white;
+  /* height: 1000vh; */
+  display: flex;
 
 }
 
-.profile-text{
-    padding: 0px 10px;
+h1 {
+  color: black;
+  font-size: 30px;
+  padding: 30px 50px;
+  padding-bottom: 10px;
 }
 
-.profile{
-    display: flex;
-      padding: 0px 50px;
-      padding-bottom: 30px;
-    
+h3 {
+  color: blue;
+  padding: 10px 50px;
+  font-size: 17px;
+
 }
 
-.email{
-    font-size: 14px;
-    color: gray;
+h5 {
+  padding: 20px 50px;
+  color: black;
+  font-weight: bold;
 }
 
-hr{
-     border: 1px solid black;
-     margin-bottom: 10px;
+
+.profile-img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: blueviolet;
+  text-align: center;
+  color: white;
+  padding-top: 5px;
+
 }
 
-.name{
-    color: black;
+.profile-text {
+  padding: 0px 10px;
 }
 
-/* p{
-    color: black;
-} */
+.profile {
+  display: flex;
+  padding: 0px 50px;
+  padding-bottom: 30px;
 
+}
 
+.email {
+  font-size: 14px;
+  color: gray;
+}
 
+hr {
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
 
-/* .... */
-
+.name {
+  color: black;
+}
 
 /* Contacts.css */
 
@@ -82,11 +69,11 @@ hr{
   margin: 20px;
 }
 
-.heading{
+.heading {
   font-size: 20px;
   color: red;
   padding-left: 70px;
- 
+
 }
 
 .form-container {
@@ -94,7 +81,7 @@ hr{
   justify-content: center;
   padding-left: 200px;
   padding-top: 10px;
- 
+
   /* height: 100%; */
 }
 
@@ -106,13 +93,13 @@ hr{
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 } */
 
-label {
+.form-container label {
   display: block;
   margin-top: 8px;
   font-weight: bold;
 }
 
-input {
+.form-container input {
   width: 100%;
   padding: 8px;
   margin-top: 4px;
@@ -123,10 +110,10 @@ input {
 .button-container {
   display: flex;
   justify-content: space-between;
-  padding-top:20px ;
+  padding-top: 20px;
 }
 
-button {
+.form-container button {
   padding: 8px 16px;
   margin-top: 10px;
   cursor: pointer;
@@ -144,7 +131,7 @@ button {
   background-color: #45a049;
 }
 
-.cancelbtn:hover{
+.cancelbtn:hover {
   background-color: red;
 }
 
@@ -158,25 +145,25 @@ button {
 .form-container {
   display: flex;
   justify-content: center;
-  
+
 }
 
 .form {
   width: 300px;
   height: 300px;
   padding: 20px;
-  background-color:rgb(184, 184, 231);
+  background-color: rgb(184, 184, 231);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-label {
+.form-container label {
   display: block;
   margin-top: 8px;
   font-weight: bold;
 }
 
-input {
+.form-container input {
   width: 100%;
   padding: 8px;
   margin-top: 4px;
@@ -189,7 +176,7 @@ input {
   justify-content: space-between;
 }
 
-button {
+.form-container button {
   padding: 8px 16px;
   margin-top: 10px;
   cursor: pointer;
@@ -199,9 +186,6 @@ button {
   border-radius: 4px;
 }
 
-button:hover {
+.form-container button:hover {
   background-color: #45a049;
 }
-
-
-

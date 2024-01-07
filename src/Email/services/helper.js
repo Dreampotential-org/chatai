@@ -2,11 +2,12 @@ import axiosInstance from "../services/axios";
 import axios from "axios";
 const SERVER = "https://api.dreampotential.org/";
 const token = localStorage.getItem("Token");
+const USER = "saurabh@agentstat.com";
 
 export const getMails = async () => {
   try {
     const response = await axios
-      .get(`${SERVER}mailapi/get-emails/saurabh@agentstat.com/`, {
+      .get(`${SERVER}mailapi/get-emails/${USER}/`, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -53,7 +54,7 @@ export const setRead = async (payload) => {
   try {
     // https://api.dreampotential.org/mailapi/set-read/7/?
     const response = await axios
-      .get(`${SERVER}mailapi/set-read/${payload.id}/?`, {
+      .post(`${SERVER}mailapi/set-read/${payload.id}/?`, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -77,7 +78,7 @@ export const setRead = async (payload) => {
 export const setUnRead = async (payload) => {
   try {
     const response = await axios
-      .get(`${SERVER}mailapi/set-unread/${payload.id}/`, {
+      .post(`${SERVER}mailapi/set-unread/${payload.id}/`, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -101,7 +102,7 @@ export const setUnRead = async (payload) => {
 export const deleteMail = async (payload) => {
   try {
     const response = await axios
-      .get(`${SERVER}mailapi/delete-email/${payload.id}/`, {
+      .delete(`${SERVER}mailapi/delete-email/${payload.id}/`, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -124,7 +125,30 @@ export const deleteMail = async (payload) => {
 export const unDeleteMail = async (payload) => {
   try {
     const response = await axios
-      .get(`${SERVER}mailapi/undelete-email/${payload.id}/`, {
+      .post(`${SERVER}mailapi/undelete-email/${payload.id}/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          return response;
+        } else {
+          throw new Error("Failed to upload video");
+        }
+      });
+    return response;
+  } catch (error) {
+    if (error.response) {
+      throw error.response.data;
+    }
+  }
+};
+
+export const getSentMails = async (payload) => {
+  try {
+    const response = await axios
+      .get(`${SERVER}mailapi/get-cemails/${USER}/`, {
         headers: {
           Authorization: `Token ${token}`,
         },

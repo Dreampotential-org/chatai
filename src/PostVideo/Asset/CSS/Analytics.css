@@ -55,7 +55,7 @@
 
 /* DASHBOARD COMPONENT */
 
-.container {
+.analytics_container {
     width: 100%;
     max-height: 88vh;
     overflow-y: auto;
