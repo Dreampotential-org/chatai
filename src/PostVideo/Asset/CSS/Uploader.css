@@ -39,7 +39,7 @@
     height: 260px;
     overflow-y: scroll;
     gap: 0.2rem;
-    background: var(--bs-dark);
+    background: var(--chakra-colors-facebook-900)
 }
 
 .main_sec ul li {
@@ -49,4 +49,9 @@
     border-bottom: 1.5px solid var(--white);
     justify-content: space-between;
     align-items: center;
+}
+
+.main_sec ul li:hover {
+    background: var(--chakra-colors-chakra-subtle-bg);
+    color: var(--chakra-colors-whiteAlpha-900);
 }

@@ -1,6 +1,7 @@
 import AudioRecord from "./AudioRecord";
 import Recodings from "./Recodings";
 import Screenrecoding from "./Screenrecoding";
-import UploadVideo from "./UploadVideo";
+import Upload from "./Upload";
+import Navbar from "./Navbar";
 
-export { AudioRecord, Recodings, Screenrecoding, UploadVideo };
+export { AudioRecord, Recodings, Screenrecoding, Upload, Navbar };

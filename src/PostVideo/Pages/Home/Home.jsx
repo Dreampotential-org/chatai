@@ -3,17 +3,16 @@ import {
   AudioRecord,
   Recodings,
   Screenrecoding,
-  UploadVideo,
+  Upload,
+  Navbar,
 } from "../../Component/index";
 import "./home.css";
-import Navbar from "../../Component/Navbar";
-import Upload from "@/PostVideo/Component/Upload";
 
 const Home = () => {
   const [screenRecord, setScreenRecord] = useState(false);
   const [audioRecord, setaudioRecord] = useState(false);
   const [recording, setRecording] = useState(false);
-  const [recordd, setRecord] = useState(false);
+  const [record, setRecord] = useState(false);
 
   const screenRef = useRef(null);
   const audioRef = useRef(null);
@@ -61,7 +60,7 @@ const Home = () => {
         <div
           className="post-content"
           style={{
-            padding: `${recordd === true ? "0" : "5rem 0"}`,
+            padding: `${record === true ? "0" : "5rem 0"}`,
           }}
         >
           <div className="btn-container">

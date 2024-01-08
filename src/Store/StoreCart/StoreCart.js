@@ -15,11 +15,12 @@ const cartSlice = createSlice({
     },
 
     updateRes: (state, action) => {
-      const { id, status } = action.payload;
-      const indexToUpdate = state.res.findIndex(item => item.id === id);
+      const { id, status, vidId } = action.payload;
+      const indexToUpdate = state.res.findIndex(item => item.title === id);
 
       if (indexToUpdate !== -1) {
         state.res[indexToUpdate].status = status;
+        state.res[indexToUpdate].videoId = vidId;
       }
     },
   },

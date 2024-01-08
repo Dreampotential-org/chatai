@@ -93,10 +93,10 @@ button:focus {
     align-items: center;
     justify-content: center;
     background: url('./bycycle.png');
-     background-size: 100% 50%; 
+    background-size: 100% 50%;
     background-repeat: no-repeat;
     background-position: center bottom;
-    
+
 }
 
 .content {
@@ -172,7 +172,7 @@ button:focus {
     gap: 0.1rem;
 }
 
-.btn {
+.Btn {
     padding: 0.5rem 1rem;
     font-family: var(--main-font);
     font-size: 1rem;
@@ -183,7 +183,7 @@ button:focus {
     transition: background 100ms ease-in;
 }
 
-.btn:hover {
+.Btn:hover {
     background: var(--third-accent);
     color: #FFF;
 }

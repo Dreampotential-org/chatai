@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../Asset/CSS/Uploader.css";
 import { RxCross2 } from "react-icons/rx";
 import { FaWindowMinimize } from "react-icons/fa";
-import Loading from "../Asset/SVG/Loading";
-import Check from "../Asset/SVG/Check";
-import CloseIcon from "../Asset/SVG/CloseIcon";
+import { Check, CloseIcon, Loading } from "../Asset/SVG/index";
 import { uploadRes, updateRes } from "../../Store/StoreCart/StoreCart";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import "../Asset/CSS/Uploader.css";
 
 const Upload = () => {
   const [modal, setModal] = useState(false);
   const [files, setFiles] = useState([]);
   const [currentFileIndex, setCurrentFileIndex] = useState(0);
-  const [uploadResponses, setUploadResponses] = useState([]);
   const token = localStorage.getItem("Token");
   const SERVER = "https://api.dreampotential.org/";
   const dispatch = useDispatch();
   const items = useSelector((state) => state.allCart.res);
+  const navigate = useNavigate();
 
   const overlayModal = (prop) => {
     const overlay = document.getElementById("upload_overlay");
@@ -49,9 +48,21 @@ const Upload = () => {
         }
       );
       if (response.status === 200) {
-        dispatch(updateRes({ id: currentFileIndex, status: true }));
+        dispatch(
+          updateRes({
+            id: files[currentFileIndex].name,
+            status: true,
+            vidId: response.data.id,
+          })
+        );
       } else {
-        dispatch(updateRes({ id: currentFileIndex, status: false }));
+        dispatch(
+          updateRes({
+            id: files[currentFileIndex].name,
+            status: false,
+            vidId: null,
+          })
+        );
       }
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -62,10 +73,11 @@ const Upload = () => {
     if (currentFileIndex === 0) {
       for (let i = 0; i < files.length; i++) {
         let res = {
-          id: i,
+          id: i + "asndkga" + Math.floor(Math.random() * 5499),
           title: files[i].name,
           loading: true,
           status: null,
+          videoId: null,
         };
         dispatch(uploadRes(res));
       }
@@ -87,8 +99,22 @@ const Upload = () => {
     if (files.length > 0 && currentFileIndex < files.length) {
       handleUpload();
       setModal(true);
+    } else if (files.length > 0 && currentFileIndex === files.length) {
+      // Reset currentFileIndex and files state after all files have been uploaded
+      setCurrentFileIndex(0);
+      setFiles([]);
     }
   }, [files, currentFileIndex]);
+
+  const redirectToVideo = (prop) => {
+    navigate(`/postVideo/videoSection/${prop.videoId}`);
+  };
+
+  useEffect(() => {
+    if (items.length > 0) {
+      setModal(true);
+    }
+  }, []);
 
   return (
     <>
@@ -112,7 +138,11 @@ const Upload = () => {
           <div className="main_sec">
             <ul className="flex__col">
               {items.map((item, index) => (
-                <li className="flex__row" key={item.id}>
+                <li
+                  className="flex__row"
+                  key={item.id}
+                  onClick={() => redirectToVideo(item)}
+                >
                   <p>{item.title}</p>
                   {item.status === null && <Loading />}
                   {item.status === true && <Check />}
@@ -133,7 +163,7 @@ const Upload = () => {
           style={{ display: "none" }}
         />
         <label htmlFor="uploadVideo" className="post-btn">
-          Upload File
+          Upload Video
         </label>
       </div>
     </>
@@ -141,92 +171,3 @@ const Upload = () => {
 };
 
 export default Upload;
-
-const FileUploadComponent = () => {
-  const [files, setFiles] = useState([]);
-  const [currentFileIndex, setCurrentFileIndex] = useState(0);
-  const [uploadResponses, setUploadResponses] = useState([]);
-  const token = localStorage.getItem("Token");
-  const SERVER = "https://api.dreampotential.org/";
-  const dispatch = useDispatch();
-
-  const handleFileChange = (event) => {
-    const selectedFiles = Array.from(event.target.files);
-    setFiles(selectedFiles);
-  };
-
-  const uploadFile = async (file) => {
-    const formData = new FormData();
-    formData.append("file", file, file.name);
-    formData.append("source", window.location.host);
-
-    try {
-      const response = await axios.post(
-        `${SERVER}storage/file-upload/`,
-        formData,
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        dispatch(updateRes({ id: currentFileIndex, status: true }));
-      } else {
-        dispatch(updateRes({ id: currentFileIndex, status: false }));
-      }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-  };
-
-  const handleUpload = async () => {
-    if (currentFileIndex === 0) {
-      for (let i = 0; i < files.length; i++) {
-        let res = {
-          id: i,
-          title: files[i].name,
-          loading: true,
-          status: null,
-        };
-        dispatch(uploadRes(res));
-      }
-    }
-    try {
-      const currentFile = files[currentFileIndex];
-      if (currentFile) {
-        await uploadFile(currentFile);
-        setCurrentFileIndex((prevIndex) => prevIndex + 1);
-      } else {
-        console.log("All files uploaded successfully!");
-      }
-    } catch (error) {
-      console.error("Error during file upload:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (files.length > 0 && currentFileIndex < files.length) {
-      handleUpload();
-    }
-  }, [files, currentFileIndex]);
-
-  return (
-    <div>
-      <input
-        type="file"
-        accept="video/*"
-        multiple
-        onChange={handleFileChange}
-      />
-      <div>
-        <h3>Upload Responses:</h3>
-        <ul>
-          {uploadResponses.map((response, index) => (
-            <li key={index}>{JSON.stringify(response)}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { AudioRecord, Recodings, Screenrecoding, UploadVideo } from "./index";
+import { AudioRecord, Recodings, Screenrecoding, Upload } from "./index";
 import "../Pages/Home/home.css";
 import Navbar from "./Navbar";
 
@@ -81,13 +81,12 @@ const VideoNarrator = () => {
           </div>
           <div>
             <textarea name="discription" id="" cols="30" rows="10"></textarea>
-            {/* <div className="upload-section">
-              <UploadVideo />
-            </div> */}
+            <div className="upload-section">
+              <Upload />
+            </div>
           </div>
         </div>
       </div>
-      {/* <Upload /> */}
     </>
   );
 };
