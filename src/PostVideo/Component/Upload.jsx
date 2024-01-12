@@ -32,6 +32,11 @@ const Upload = () => {
     setFiles(selectedFiles);
   };
 
+  function updateProgress(e) {
+    let swaltitle = document.getElementById("progress");
+    swaltitle.textContent = parseInt((e.loaded / e.total) * 100) + "%";
+  }
+
   const uploadFile = async (file) => {
     const formData = new FormData();
     formData.append("file", file, file.name);
@@ -44,6 +49,17 @@ const Upload = () => {
         {
           headers: {
             Authorization: `Token ${token}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            updateProgress(progressEvent);
+          },
+        },
+        {
+          progress: (progressEvent) => {
+            if (progressEvent.lengthComputable) {
+              console.log(progressEvent.loaded + " " + progressEvent.total);
+              this.updateProgress(progressEvent);
+            }
           },
         }
       );
@@ -144,7 +160,12 @@ const Upload = () => {
                   onClick={() => redirectToVideo(item)}
                 >
                   <p>{item.title}</p>
-                  {item.status === null && <Loading />}
+                  {item.status === null && (
+                    <div className="flex__row">
+                      <p id="progress">%0</p>
+                      <Loading />
+                    </div>
+                  )}
                   {item.status === true && <Check />}
                   {item.status === false && <CloseIcon />}
                 </li>
