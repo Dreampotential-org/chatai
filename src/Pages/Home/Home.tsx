@@ -80,6 +80,9 @@ const Home = () => {
               <Link className="chatai" to="/chatai">
                 Chat Ai
               </Link>
+              <Link className="video" to="https://streamsphere.dreampotential.org/">
+                Video Streaming
+              </Link>
               <Link className="postvideo" to="/postVideo">
                 Post Video
               </Link>
