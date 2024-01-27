@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { storeRecoded } from "../../Store/StoreCart/StoreCart";
+import { useDispatch } from "react-redux";
 
 const Recordings = forwardRef((props, ref) => {
   const [recording, setRecording] = useState(false);
@@ -16,6 +18,7 @@ const Recordings = forwardRef((props, ref) => {
   const mediaRecorderRef = useRef(null);
   const SERVER = "https://api.dreampotential.org/";
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleStopRecording = async () => {
     if (
@@ -139,6 +142,7 @@ const Recordings = forwardRef((props, ref) => {
         const formData = new FormData();
         formData.append("file", file, file.name);
         formData.append("source", window.location.host);
+        dispatch(storeRecoded(formData)); // storing the recoded chunks for uploading if to many are recorded at a time
         const response = axios
           .post(
             `${SERVER}storage/file-upload/`,

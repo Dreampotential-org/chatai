@@ -1,6 +1,8 @@
 import axiosInstance from "../services/axios";
 import axios from "axios";
 const SERVER = "https://api.dreampotential.org/";
+
+
 export const leadCreateApi = async (payload) => {
   try {
     const res = await axiosInstance.post("/lead/", payload);
@@ -40,7 +42,7 @@ export const signUPApi = async (payload) => {
   try {
     // const res = await axiosInstance.post("http://app.realtorstat.com:8021/usersystem/user/register", payload);
     const res = await axiosInstance.post(
-      `${SERVER}usersystem/user/register`,
+      `${SERVER}awipu/user/register`,
       payload
     );
     // const res = await axiosInstance.post("/usersystem/user/register/", payload);

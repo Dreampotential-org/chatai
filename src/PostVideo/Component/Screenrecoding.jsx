@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { storeRecoded } from "../../Store/StoreCart/StoreCart";
+import { useDispatch } from "react-redux";
 
 const Screenrecording = forwardRef((props, ref) => {
   const [recording, setRecording] = useState(false);
@@ -15,6 +17,8 @@ const Screenrecording = forwardRef((props, ref) => {
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const SERVER = "https://api.dreampotential.org/";
+  const dispatch = useDispatch();
+  // const items = useSelector((state) => state.allCart.recorded);
   const navigate = useNavigate();
 
   const handleStopRecording = async () => {
@@ -145,6 +149,7 @@ const Screenrecording = forwardRef((props, ref) => {
         const formData = new FormData();
         formData.append("file", file, file.name);
         formData.append("source", window.location.host);
+        dispatch(storeRecoded(formData)); // storing the recoded chunks for uploading if to many are recorded at a time
         const response = axios
           .post(
             `${SERVER}storage/file-upload/`,
@@ -154,7 +159,6 @@ const Screenrecording = forwardRef((props, ref) => {
                 Authorization: `Token ${token}`,
               },
               onUploadProgress: (progressEvent) => {
-                // console.log(progressEvent.loaded + " " + progressEvent.total);
                 updateProgress(progressEvent);
               },
             },

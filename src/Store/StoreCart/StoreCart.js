@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialCart = {
   res: [],
+  recorded: []
 }
 
 
@@ -23,9 +24,13 @@ const cartSlice = createSlice({
         state.res[indexToUpdate].videoId = vidId;
       }
     },
+    storeRecoded: (state, action) => {
+      state.recorded.push(action.payload)
+    }
+
   },
 });
 export const {
-  uploadRes, updateRes
+  uploadRes, updateRes, storeRecoded
 } = cartSlice.actions;
 export default cartSlice.reducer;

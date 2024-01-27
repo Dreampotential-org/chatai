@@ -83,7 +83,7 @@ const AuthPage: React.FC = () => {
                 </div>
                 <div className="inputs">
                   <input
-                    type="text"
+                    type="email"
                     id="email"
                     name="email"
                     placeholder="Email"

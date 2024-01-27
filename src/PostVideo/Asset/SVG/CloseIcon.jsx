@@ -8,9 +8,9 @@ const CloseIcon = () => {
       width="200px"
       height="200px"
       style={{
-        height: "100%",
-        width: "100%",
-        background: "rgb(255, 255, 255)",
+        height: "24px",
+        width: "24px",
+        // background: "rgb(255, 255, 255)",
       }}
     >
       <g
@@ -39,7 +39,7 @@ const CloseIcon = () => {
                 r="40"
                 cy="50"
                 cx="50"
-                style={{ stroke: "rgb(51, 51, 51)" }}
+                style={{ stroke: "rgb(225, 91, 100)" }}
               ></circle>
             </g>
           </g>
