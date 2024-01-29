@@ -12,7 +12,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiInboxArrowDown } from "react-icons/hi2";
 import { FaWindowMinimize } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
+import { RxCross1, RxCross2 } from "react-icons/rx";
 import { FaBars } from "react-icons/fa";
 import {
   IoReturnUpForwardOutline,
@@ -52,6 +52,7 @@ const Home = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [attachments, setAttachments] = useState([]);
   const [showMaillists, setShowMaillists] = useState(false);
+  const [hamburgerMenu, sethamburgerMenu] = useState(false);
   const toast = useToast();
 
   const [toggleSection, setToggleSection] = useState({
@@ -300,15 +301,33 @@ const Home = () => {
   return (
     <div className="mail__container">
       <div className="navbar">
-        <div className="nav-links" style={{ alignItems: "center" }}>
+        <div className="flex__row flex__center navLeft">
           <FaBars fontSize={24} onClick={() => setSideBar(!sideBar)} />
           <Link to="/" className="nav-logo">
             <img src={Logo} alt="Logo" />
           </Link>
-          <Link to="/chatai">ChatAi</Link>
-          <Link to="/postVideo">Post Video</Link>
         </div>
-        <div>
+        <div className="flex__row flex__center nav_dropDown">
+          <div
+            className={`flex__row flex__center ${
+              hamburgerMenu ? "nav_Show" : "nav_Hide"
+            }`}
+            style={{ gap: "1rem" }}
+          >
+            <Link to="/chatai">ChatAi</Link>
+            <Link to="/postVideo">Post Video</Link>
+          </div>
+          {hamburgerMenu ? (
+            <RxCross1
+              fontSize={24}
+              onClick={() => sethamburgerMenu(!hamburgerMenu)}
+            />
+          ) : (
+            <FaBars
+              fontSize={24}
+              onClick={() => sethamburgerMenu(!hamburgerMenu)}
+            />
+          )}
           <IoIosLogOut color="#FFF" fontSize={30} onClick={userLogOut} />
         </div>
       </div>

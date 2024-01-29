@@ -22,9 +22,9 @@ const Home = () => {
   useEffect(() => {
     const token = localStorage.getItem("Token");
     if (token !== null) {
-      setAuthTrue(true);
+      // setAuthTrue(true);
     } else {
-      setAuthTrue(false);
+      setAuthTrue(true);
     }
   }, [Home]);
 
@@ -36,37 +36,18 @@ const Home = () => {
 
   return (
     <div className="home">
-      {/* <div className="left">
-        <div className="nav">
-          <div className="logo">
-            <img src={Logo} alt="Logo" width={250} height={100} />
-          </div>
-        </div>
-        <div className="left-content">
-          <h1>Help me debug</h1>
-          <p>to my code and make it more efficient. </p>
-        </div>
-      </div> */}
       <div className="right">
-        <div className="navbar front">
-          {/* <div className=""> */}
-          <div className="">
-            <img src={Logo} alt="Logo" width={250} height={100} />
+        <div className="navbar navLeft">
+          <div className="nav-logo">
+            <img src={Logo} alt="Logo" />
           </div>
-          {/* <div className="right__top flex__row"> */}
-          <div className="setting-logout">
+          <div className="setting-logout" style={{ gap: "1rem" }}>
             {authTrue && (
               <>
                 <Link to="/settings">
                   <IoSettingsOutline color="#FFF" fontSize={32} />
                 </Link>
-                <button
-                  className="logoutbtn"
-                  type="button"
-                  onClick={userLogOut}
-                >
-                  <IoIosLogOut color="#FFF" fontSize={32} />
-                </button>
+                <IoIosLogOut color="#FFF" fontSize={32} onClick={userLogOut} />
               </>
             )}
           </div>
@@ -76,11 +57,14 @@ const Home = () => {
         {authTrue ? (
           <div className="auth-section">
             <h3>Get Started</h3>
-            <div className="link-container">
+            <div className="link-container flex__row flex__center">
               <Link className="chatai" to="/chatai">
                 Chat Ai
               </Link>
-              <Link className="video" to="https://streamsphere.dreampotential.org/">
+              <Link
+                className="video"
+                to="https://streamsphere.dreampotential.org/"
+              >
                 Video Streaming
               </Link>
               <Link className="postvideo" to="/postVideo">
@@ -118,7 +102,7 @@ const Home = () => {
         )}
         <div className="termService">
           <p>Dream Potential</p>
-          <div className="services">
+          <div className="flex__row flex__center link-container">
             <p>Terms of use</p>
             <span />
             <p>Privacy Policy</p>

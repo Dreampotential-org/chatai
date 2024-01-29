@@ -15,13 +15,27 @@ textarea:focus {
     background: var(--secondry-accent)
 }
 
-.mail__container .nav-links>svg {
+.navbar .navLeft>svg {
     display: none;
 }
 
-.mail__container .nav-links img {
+.navLeft {
+    align-items: "center";
+    gap: 1rem;
+}
+
+.navbar img {
     width: 200px;
     height: 40px;
+}
+
+.navbar a {
+    color: var(--white) !important;
+    margin: auto 0;
+}
+
+.nav_dropDown {
+    gap: 1rem;
 }
 
 .mail__content {
@@ -417,7 +431,7 @@ textarea:focus {
         z-index: 1;
     }
 
-    .mail__container .nav-links svg {
+    .mail__container .navLeft svg {
         display: flex;
     }
 
@@ -451,20 +465,19 @@ textarea:focus {
         gap: .5rem;
     }
 
-    .mail__container .nav-logo {
-        width: 110px;
+    .navLeft .nav-logo {
+        width: 150px;
     }
 
-    .mail__container .nav-logo img {
+    .navLeft .nav-logo img {
         width: 100%;
     }
 
-
-    .mail__container .nav-links a {
+    .navbar a {
         font-size: .8rem;
     }
 
-    .mail__container .navbar svg {
+    .navbar svg {
         font-size: 20px;
     }
 
@@ -502,16 +515,37 @@ textarea:focus {
     }
 }
 
+@media screen and (max-width:450px) {
+    .nav_Hide {
+        display: none !important;
+    }
+
+    .nav_Show {
+        flex-direction: column !important;
+        gap: 0.5rem;
+        position: absolute;
+        padding: 1rem;
+        top: 7vh;
+        right: 30px;
+        z-index: 99;
+        background: var(--chakra-colors-blue-800);
+        border-radius: 5px;
+        text-align: center;
+    }
+}
+
+
+
 @media screen and (max-width:420px) {
-    .mail__container .nav-links a {
+    .navbar a {
         font-size: .65rem;
     }
 
-    .mail__container .nav-logo {
-        width: 90px;
+    .navLeft .nav-logo {
+        width: 130px;
     }
 
-    .mail__container .navbar svg {
+    .navbar svg {
         font-size: 16px;
     }
 

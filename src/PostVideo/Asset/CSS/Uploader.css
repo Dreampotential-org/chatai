@@ -1,9 +1,11 @@
 .uploader {
+    --height: 300px;
+    --width: 350px;
     position: absolute;
     bottom: 0;
     right: 20px;
-    width: 350px;
-    height: 300px;
+    width: var(--width);
+    height: var(--height);
     background: var(--bs-border-color);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -31,12 +33,12 @@
 
 .main_sec {
     width: 100%;
-    height: 260px;
+    height: calc(var(--height)-40px);
 }
 
 .main_sec ul {
     width: 100%;
-    height: 260px;
+    height: calc(var(--height)-40px);
     overflow-y: scroll;
     gap: 0.2rem;
     background: var(--chakra-colors-facebook-900)
@@ -54,4 +56,36 @@
 .main_sec ul li:hover {
     background: var(--chakra-colors-chakra-subtle-bg);
     color: var(--chakra-colors-whiteAlpha-900);
+}
+
+.main_sec ul li p {
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+@media screen and (max-width:500px) {
+    .uploader {
+        --width: 300px;
+        --height: 250px;
+    }
+
+    .main_sec,
+    .main_sec ul {
+        height: calc(var(--height)-40px);
+    }
+
+    .top_sec p,
+    .main_sec ul li p {
+        font-size: .85rem;
+    }
+}
+
+@media screen and (max-width:350px) {
+    .uploader {
+        --width: 250px;
+        --height: 250px;
+    }
 }

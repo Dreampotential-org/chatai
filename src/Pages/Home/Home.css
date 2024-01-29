@@ -3,7 +3,7 @@
     height: 100%;
     display: grid;
     /* grid-template-columns: 0.6fr .4fr; */
-     /* grid-template-columns: 0.5fr .7fr; */
+    /* grid-template-columns: 0.5fr .7fr; */
     overflow: hidden;
 }
 
@@ -47,11 +47,11 @@
     width: 100%;
     height: 100%;
     /* background-color: var(--prussian-blue); */
-     background: url('./bycycle.png');
-     background-size: 100% 50%; 
+    background: url('./bycycle.png');
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
-     
+
 }
 
 
@@ -83,12 +83,9 @@
     height: 10%;
 }
 
-.link-container,
-.services {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.link-container {
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .auth-section h3 {
@@ -100,7 +97,7 @@
 
 .link-container a {
     /* padding: 0.6rem 1rem; */
-     padding: 2rem 2rem;
+    padding: 2rem 2rem;
     border-radius: 5px;
     font-size: 1.1rem;
     /* background-color: var(--caribbean-current); */
@@ -110,30 +107,31 @@
 
 }
 
-.link-container .chatai{
+.link-container .chatai {
     background-color: #1abc9c;
     /* color: black !important; */
 }
-.link-container .video{
+
+.link-container .video {
     background-color: #fc5e5d;
     /* color: black !important; */
 }
 
 
-.link-container .postvideo{
+.link-container .postvideo {
     background-color: #ff8033;
 }
 
-.link-container .mail{
+.link-container .mail {
     background-color: #7ccb70;
 }
 
-.link-container .admin-panel{
+.link-container .admin-panel {
     background-color: #fc5e5d;
 
 }
 
-.link-container .contacts{
+.link-container .contacts {
     background-color: #29911d;
 }
 
@@ -152,45 +150,56 @@
     color: gray;
 }
 
-.logo{
+.logo {
     display: flex;
     justify-content: space-between;
     /* background-color: rgb(111, 111, 168); */
     padding: 10px;
 }
 
-.setting-logout{
+.setting-logout {
     display: flex;
     justify-content: space-between;
 }
 
-.logoutbtn{
+.logoutbtn {
     padding-left: 30px;
     padding-bottom: 10px;
     padding-right: 30px;
 }
 
-.logo{
+.logo {
     display: flex;
     justify-content: space-between;
 }
 
-/* .logo-img{
-    margin-right: 1000px;
 
-    background-color: red;
+.right .navbar {
+    background-color: rgb(66, 127, 151);
+    padding: 5px 10px !important;
 }
 
-.nav{
-    background-color: white !important;
-} */
 
-/* .navbar{
-    background-color: rgb(66, 127, 151);
-   
-} */
+@media screen and (max-width:1050px) {
+    .link-container {
+        width: 70%;
+    }
 
-.front{
-     background-color: rgb(66, 127, 151);
-    padding: 5px 10px !important;
+    .link-container a,
+    .link-container p {
+        padding: .7rem 1rem;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width:700px) {
+    .link-container {
+        width: 70%;
+    }
+
+    .link-container a,
+    .link-container p {
+        padding: .7rem 1rem;
+        font-size: .75rem;
+    }
 }

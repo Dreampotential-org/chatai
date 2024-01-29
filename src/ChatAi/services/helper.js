@@ -42,11 +42,10 @@ export const signUPApi = async (payload) => {
   try {
     // const res = await axiosInstance.post("http://app.realtorstat.com:8021/usersystem/user/register", payload);
     const res = await axiosInstance.post(
-      `${SERVER}awipu/user/register`,
+      `${SERVER}usersystem/user/register`,
       payload
     );
     // const res = await axiosInstance.post("/usersystem/user/register/", payload);
-    // localStorage.setItem('Token', JSON.stringify(res.token));
     localStorage.setItem("Token", res.data.token);
     return res;
   } catch (error) {
