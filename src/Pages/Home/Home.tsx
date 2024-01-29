@@ -22,9 +22,9 @@ const Home = () => {
   useEffect(() => {
     const token = localStorage.getItem("Token");
     if (token !== null) {
-      // setAuthTrue(true);
-    } else {
       setAuthTrue(true);
+    } else {
+      setAuthTrue(false);
     }
   }, [Home]);
 
