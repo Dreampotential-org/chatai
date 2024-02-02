@@ -1,6 +1,6 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { logInApi, signUPApi } from "../../ChatAi/services/helper";
+import { signUPApi } from "../../ChatAi/services/helper";
 import "./AuthPage.css";
 
 interface ErrorState {
@@ -62,58 +62,54 @@ const AuthPage: React.FC = () => {
 
   return (
     <>
-      <div className="auth" id="auth">
-        <div className="authpage">
-          <div className="content">
-            <div className="signup">
-              <div className="heading">
-                <h1>SignUp</h1>
-              </div>
-              <form onSubmit={creatSubmit}>
-                <div className="inputs">
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Name"
-                    value={credential.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="inputs">
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Email"
-                    value={credential.email}
-                    onChange={handleChange}
-                    required
-                  />
-                  <p id="newUserNameError">{createError.error}</p>
-                </div>
-                <div className="inputs">
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Password"
-                    value={credential.password}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <button className="Btn" type="submit">
-                  Register
-                </button>
-              </form>
-              <div className="linkpage">
-                <button type="button" onClick={() => navigate("/login")}>
-                  Have an account?
-                </button>
-              </div>
+      <div className="authpage">
+        <div className="signup content">
+          <div className="heading">
+            <h1>SignUp</h1>
+          </div>
+          <form onSubmit={creatSubmit}>
+            <div className="inputs">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Name"
+                value={credential.name}
+                onChange={handleChange}
+                required
+              />
             </div>
+            <div className="inputs">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                value={credential.email}
+                onChange={handleChange}
+                required
+              />
+              <p id="newUserNameError">{createError.error}</p>
+            </div>
+            <div className="inputs">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                value={credential.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <button className="Btn" type="submit">
+              Register
+            </button>
+          </form>
+          <div className="linkpage">
+            <button type="button" onClick={() => navigate("/login")}>
+              Have an account?
+            </button>
           </div>
         </div>
       </div>

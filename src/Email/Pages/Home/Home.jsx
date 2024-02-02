@@ -317,17 +317,19 @@ const Home = () => {
             <Link to="/chatai">ChatAi</Link>
             <Link to="/postVideo">Post Video</Link>
           </div>
-          {hamburgerMenu ? (
-            <RxCross1
-              fontSize={24}
-              onClick={() => sethamburgerMenu(!hamburgerMenu)}
-            />
-          ) : (
-            <FaBars
-              fontSize={24}
-              onClick={() => sethamburgerMenu(!hamburgerMenu)}
-            />
-          )}
+          <div className="hamBtn">
+            {hamburgerMenu ? (
+              <RxCross1
+                fontSize={24}
+                onClick={() => sethamburgerMenu(!hamburgerMenu)}
+              />
+            ) : (
+              <FaBars
+                fontSize={24}
+                onClick={() => sethamburgerMenu(!hamburgerMenu)}
+              />
+            )}
+          </div>
           <IoIosLogOut color="#FFF" fontSize={30} onClick={userLogOut} />
         </div>
       </div>

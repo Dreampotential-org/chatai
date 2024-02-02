@@ -94,7 +94,7 @@ const Home = () => {
         ) : (
           <div className="auth-section">
             <h3>Get Started</h3>
-            <div className="link-container">
+            <div className="link-container flex__row flex__center">
               <Link to="/login">Log in</Link>
               <Link to="/signup">Sign up</Link>
             </div>

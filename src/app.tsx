@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 import { store } from "./Store/store";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -8,19 +8,24 @@ import ReactDOM from "react-dom/client";
 import PostVideo from "./PostVideo/Pages/Home/Home";
 import ChatAi from "./ChatAi/pages/Home";
 import "./ChatAi/styles/global.css";
-import { Home, Signup, Login } from "./Pages/index";
+import {
+  Home,
+  Login,
+  Signup,
+  ForgetPassword,
+  AdminPanel,
+  Contacts,
+  Fitness,
+  Setting,
+  TeacherUI,
+} from "./Pages/index";
 import ListVideo from "./PostVideo/Component/ListVideo";
 import VeiwVideo from "./PostVideo/Component/ViewVideo";
 import VideoSection from "./PostVideo/Component/VideoSection";
 import Analytics from "./PostVideo/Component/Analytics";
 import Email from "./Email/Pages/Home/Home";
-import Settings from "./Pages/Settings/Setting";
-import AdminPanel from "./Pages/Adminpanel/Adminpanel";
-import Contacts from "./Pages/Contacts/Contacts";
 import FAQ from "./ChatAi/pages/FAQ";
-import TeacherUI from "./Pages/TeacherUI/TeacherUI";
 import VideoNarrator from "./PostVideo/Component/VideoNarrator";
-import Fitness from "./Pages/Fitness/Fitness";
 
 const App = () => {
   return (
@@ -47,9 +52,11 @@ const App = () => {
             <Route path="/admin-panel" element={<AdminPanel />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/teacher-ui" element={<TeacherUI />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/settings" element={<Setting />} />
 
             <Route path="/fit" element={<Fitness />} />
+
+            <Route path="/forget-password" element={<ForgetPassword />} />
           </Routes>
         </Router>
       </Providers>

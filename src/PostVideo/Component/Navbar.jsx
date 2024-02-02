@@ -34,17 +34,19 @@ const Navbar = () => {
           <Link to="/postVideo/viewVideo">Videos</Link>
         </div>
         <IoIosLogOut color="#FFF" fontSize={30} onClick={userLogOut} />
-        {hamburgerMenu ? (
-          <RxCross1
-            fontSize={24}
-            onClick={() => sethamburgerMenu(!hamburgerMenu)}
-          />
-        ) : (
-          <FaBars
-            fontSize={24}
-            onClick={() => sethamburgerMenu(!hamburgerMenu)}
-          />
-        )}
+        <div className="hamBtn">
+          {hamburgerMenu ? (
+            <RxCross1
+              fontSize={24}
+              onClick={() => sethamburgerMenu(!hamburgerMenu)}
+            />
+          ) : (
+            <FaBars
+              fontSize={24}
+              onClick={() => sethamburgerMenu(!hamburgerMenu)}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

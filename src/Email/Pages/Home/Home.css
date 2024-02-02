@@ -38,6 +38,10 @@ textarea:focus {
     gap: 1rem;
 }
 
+.hamBtn {
+    display: none;
+}
+
 .mail__content {
     width: 100vw;
     height: 92vh;
@@ -531,6 +535,10 @@ textarea:focus {
         background: var(--chakra-colors-blue-800);
         border-radius: 5px;
         text-align: center;
+    }
+
+    .hamBtn {
+        display: flex;
     }
 }
 

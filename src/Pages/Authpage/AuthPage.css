@@ -76,15 +76,6 @@ button:focus {
     gap: 0.52rem;
 }
 
-
-.auth {
-    margin: auto;
-    min-height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .authpage {
     width: 100%;
     height: 100vh;
@@ -93,7 +84,7 @@ button:focus {
     align-items: center;
     justify-content: center;
     background: url('./bycycle.png');
-    background-size: 100% 50%;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
 
@@ -109,17 +100,17 @@ button:focus {
     background: var(--third-accent);
 }
 
-:is(.signup, .login) {
+:is(.signup, .login, .forget) {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    width: 100%;
+    /* width: 100%; */
 }
 
 
-:is(.signup, .login) form {
+:is(.signup, .login, .forget) form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -128,7 +119,7 @@ button:focus {
     width: 80%;
 }
 
-:is(.signup, .login) .heading {
+:is(.signup, .login, .forget) .heading {
     font-size: 1.2rem;
     font-family: var(--main-font);
     font-weight: 300;
@@ -137,7 +128,7 @@ button:focus {
     text-align: center;
 }
 
-:is(.signup>.heading, .login>.heading) h1 {
+:is(.signup>.heading, .login>.heading, .forget>.heading) h1 {
     color: var(--gray-100);
 }
 
@@ -161,15 +152,25 @@ button:focus {
     border-radius: 0.2rem;
 }
 
-.inputs p {
+.inputs p,
+.heading p {
     padding: 0.3rem 0 0 .8rem;
     color: var(--CTA);
     font-family: var(--main-font);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 400;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.1rem;
+}
+
+.inputs span {
+    padding: 0.5rem 0;
+    color: var(--chakra-colors-telegram-100);
+    font-family: var(--main-font);
+    font-size: .85rem;
+    text-align: center;
 }
 
 .Btn {
@@ -188,9 +189,14 @@ button:focus {
     color: #FFF;
 }
 
+.linkpage {
+    gap: .5rem;
+}
+
+
 .linkpage button {
     background-color: transparent;
-    color: var(--third-text);
+    color: var(--chakra-colors-gray-300);
     font-family: var(--main-font);
 }
 
@@ -204,7 +210,7 @@ button:focus {
         height: 500px;
     }
 
-    :is(.signup, .login) form {
+    :is(.signup, .login, .forget) form {
         width: 95%;
     }
 }

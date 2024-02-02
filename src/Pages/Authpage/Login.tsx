@@ -10,7 +10,6 @@ interface ErrorState {
 
 const AuthPage: React.FC = () => {
   const navigate = useNavigate();
-  const [authSection, setAuthSection] = useState(false);
   const [valuesregi, setValuesregi] = useState({
     email: "",
     password: "",
@@ -20,6 +19,8 @@ const AuthPage: React.FC = () => {
     email: "",
     password: "",
   });
+
+  const [createError, setCreateError] = useState({ error: "" });
 
   const onChangeregi = (event: ChangeEvent<HTMLInputElement>) => {
     event.persist();
@@ -31,82 +32,79 @@ const AuthPage: React.FC = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const updatedErrors: ErrorState = {
-      email: !valuesregi.email ? "Email address is required" : "",
-      password: !valuesregi.password ? "Password is required" : "",
+    // const updatedErrors: ErrorState = {
+    //   email: !valuesregi.email ? "Email address is required" : "",
+    //   password: !valuesregi.password ? "Password is required" : "",
+    // };
+    // setErrorCreate(updatedErrors);
+
+    // if (!updatedErrors.email && !updatedErrors.password) {
+    // Proceed with login logic here
+    const payload = {
+      email: valuesregi.email,
+      password: valuesregi.password,
     };
-    setErrorCreate(updatedErrors);
 
-    if (!updatedErrors.email && !updatedErrors.password) {
-      // Proceed with login logic here
-      const payload = {
-        email: valuesregi.email,
-        password: valuesregi.password,
-      };
+    logInApi(payload)
+      .then((res) => {
+        if (res?.status === 200) {
+          console.log("LogIn Successfully!");
+          setValuesregi({
+            email: "",
+            password: "",
+          });
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
 
-      logInApi(payload)
-        .then((res) => {
-          // console.log('response ==>' + JSON.stringify(res));
-          if (res?.status === 200) {
-            console.log("LogIn Successfully!");
-            setValuesregi({
-              email: "",
-              password: "",
-            });
-            navigate("/");
-          } else {
-            setErrorCreate(updatedErrors);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
+        setCreateError({ error: err.msg });
+      });
+    // }
   };
 
   return (
-    <div className="auth" id="auth">
-      <div className="authpage">
-        <div className="content">
-          <div className="login">
-            <div className="heading">
-              <h1>Welcome Back</h1>
-            </div>
-            <form onSubmit={handleSubmit}>
-              <div className="inputs">
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="Email address"
-                  value={valuesregi.email}
-                  onChange={onChangeregi}
-                  required
-                />
-                <p id="emailError">{errorCreate.email}</p>
-              </div>
-              <div className="inputs">
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                  value={valuesregi.password}
-                  onChange={onChangeregi}
-                  required
-                />
-                <p id="passwordError">{errorCreate.password}</p>
-              </div>
-              <button className="Btn" type="submit">
-                Submit
-              </button>
-            </form>
-            <div className="linkpage">
-              <button type="button" onClick={() => navigate("/signup")}>
-                Register?
-              </button>
-            </div>
+    <div className="authpage">
+      <div className="login content">
+        <div className="heading">
+          <h1>Welcome Back</h1>
+          <p>{createError.error}</p>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="inputs">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email address"
+              value={valuesregi.email}
+              onChange={onChangeregi}
+              required
+            />
           </div>
+          <div className="inputs">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              value={valuesregi.password}
+              onChange={onChangeregi}
+              required
+            />
+          </div>
+          <button className="Btn" type="submit">
+            Submit
+          </button>
+        </form>
+        <div className="linkpage flex__col">
+          <button type="button" onClick={() => navigate("/forget-password")}>
+            Forget Password
+          </button>
+          <button type="button" onClick={() => navigate("/signup")}>
+            Register?
+          </button>
         </div>
       </div>
     </div>
